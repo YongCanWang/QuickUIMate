@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/ll_title"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="@dimen/xq_px_40"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="共找到“"
+        android:textSize="@dimen/xq_px_30" />
+
+    <TextView
+        android:gravity="center_vertical"
+        android:id="@+id/tv_keyword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="美食"
+        android:textSize="@dimen/xq_px_30"
+        android:textStyle="bold" />
+
+    <TextView
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="”相关"
+        android:textSize="@dimen/xq_px_30" />
+
+    <TextView
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="150"
+        android:textSize="@dimen/xq_px_30" />
+
+    <TextView
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个结果"
+        android:textSize="@dimen/xq_px_30" />
+
+
+</LinearLayout>
