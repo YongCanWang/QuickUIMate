@@ -37,7 +37,7 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     public        NaviBaseFragment     lastStckFragment;
     public static AppCompatActivity    activity;
     public        V                    binding;
-    private       VM                   vm;
+    public        VM                   vm;
 
     public NaviBaseFragment() {
     }

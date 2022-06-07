@@ -17,8 +17,7 @@ public class NaviBaseAdapter<T, V> extends BaseAdapter {
     public final Context context;
     public List<T> dataList;
     public final LayoutInflater layoutInflater;
-
-
+    
     public NaviBaseAdapter(Context context) {
         this(context, null);
     }
