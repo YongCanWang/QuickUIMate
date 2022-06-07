@@ -41,7 +41,8 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
     }
 
 
-    public void onBindViewHolder(@NonNull QuickViewHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(@NonNull QuickRecyclerViewAdapter.QuickViewHolder holder, int position) {
         if (isShowViewHead(position)) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
