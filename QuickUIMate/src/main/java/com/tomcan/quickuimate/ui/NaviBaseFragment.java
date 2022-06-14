@@ -59,6 +59,8 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goBackHandler();
+        vm = initViewModel();
+        if (vm != null) getLifecycle().addObserver(vm);
         Log.i(TAG, "onCreate");
     }
 
@@ -79,8 +81,6 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (isFirstVisit)
-            initData();
         Log.i(TAG, "onActivityCreated");
     }
 
@@ -88,11 +88,8 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     @Override
     public void onStart() {
         super.onStart();
-        initView();
         if (callBackLifecycle != null) callBackLifecycle.startUp();
         if (backHandlerInterface != null) backHandlerInterface.stackFragment(this);
-        vm = initViewModel();
-        if (vm != null) getLifecycle().addObserver(vm);
         if (isFirstVisit) setView();
         Log.i(TAG, "onStart");
     }
@@ -100,9 +97,9 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     @Override
     public void onResume() {
         super.onResume();
-//        BackHandler();
+//        backHandler();
         if (isFirstVisit) {
-            addLogic();
+            function();
         } else {
             resume();
         }
@@ -140,13 +137,9 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
 
     public abstract VM initViewModel();
 
-    public abstract View initView();
-
-    public abstract void initData();
-
     public abstract void setView();
 
-    public abstract void addLogic();
+    public abstract void function();
 
     public abstract void resume();
 
@@ -176,7 +169,7 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     }
 
 
-    protected void BackHandler() {
+    protected void backHandler() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
