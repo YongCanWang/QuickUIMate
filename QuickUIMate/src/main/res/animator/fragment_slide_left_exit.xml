@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <objectAnimator-->
+<!--        android:interpolator="@android:interpolator/accelerate_cubic"-->
+<!--        android:valueFrom="0" android:valueTo="-@dimen/qb_px_1500"-->
+<!--        android:valueType="floatType"-->
+<!--        android:propertyName="translationX"-->
+<!--        android:duration="600" />-->
+    <!--<objectAnimator-->
+    <!--android:interpolator="@android:interpolator/decelerate_quint"-->
+    <!--android:valueFrom="1.0" android:valueTo="0.0"-->
+    <!--android:valueType="floatType"-->
+    <!--android:propertyName="alpha"-->
+    <!--android:duration="@android:integer/config_mediumAnimTime" />-->
+
+        <translate
+            android:fromXDelta="0%"
+            android:toXDelta="-100%"
+            android:fromYDelta="0%"
+            android:toYDelta="0%"
+            android:duration="@integer/slide"/>
+
+</set>

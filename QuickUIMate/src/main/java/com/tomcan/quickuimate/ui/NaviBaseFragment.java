@@ -19,6 +19,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.tomcan.quickuimate.model.BaseViewModel;
 
+import java.util.HashMap;
+import java.util.List;
+
 
 /**
  * @author TomCan
@@ -27,22 +30,33 @@ import com.tomcan.quickuimate.model.BaseViewModel;
  */
 @SuppressLint("LogNotTimber")
 public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends Fragment {
-    public        String               TAG = this.getClass().getSimpleName();
-    public static Context              context;
-    public        View                 view;
-    public        View                 TagView;
-    public        BackHandlerInterface backHandlerInterface;
-    public        CallBackLifecycle    callBackLifecycle;
-    private       boolean              isFirstVisit;
-    public        NaviBaseFragment     lastStckFragment;
-    public static AppCompatActivity    activity;
-    public        V                    binding;
-    public        VM                   vm;
+    public String TAG = this.getClass().getSimpleName();
+    public static Context context;
+    public View v;
+    public View TagView;
+    public final HashMap<String, Object> datas = new HashMap<>();
+    public BackHandlerInterface backHandlerInterface;
+    public CallBackLifecycle callBackLifecycle;
+    private boolean isFirstVisit;
+    public NaviBaseFragment lastStckFragment;
+    public static AppCompatActivity activity;
+    public V binding;
+    public VM vm;
+
 
     public NaviBaseFragment() {
     }
 
+    public NaviBaseFragment(CallBackLifecycle callBackLifecycle) {
+        this.callBackLifecycle = callBackLifecycle;
+    }
+
     public NaviBaseFragment(NaviBaseFragment lastStckFragment) {
+        this.lastStckFragment = lastStckFragment;
+    }
+
+    public NaviBaseFragment(CallBackLifecycle callBackLifecycle, NaviBaseFragment lastStckFragment) {
+        this.callBackLifecycle = callBackLifecycle;
         this.lastStckFragment = lastStckFragment;
     }
 
@@ -68,14 +82,15 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
-        if (view == null) {
+        if (v == null) {
             binding = DataBindingUtil.inflate(inflater, initViewID(), container, false);
-            view = binding.getRoot();
+            binding.setLifecycleOwner(this);
+            v = binding.getRoot();
             isFirstVisit = true;
         } else {
             isFirstVisit = false;
         }
-        return this.view;
+        return this.v;
     }
 
     @Override
@@ -88,9 +103,10 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     @Override
     public void onStart() {
         super.onStart();
-        if (callBackLifecycle != null) callBackLifecycle.startUp();
-        if (backHandlerInterface != null) backHandlerInterface.stackFragment(this);
         if (isFirstVisit) setView();
+        if (isFirstVisit && callBackLifecycle != null) callBackLifecycle.onlyStartup();
+        if (callBackLifecycle != null) callBackLifecycle.startup();
+        if (backHandlerInterface != null) backHandlerInterface.stackFragment(this);
         Log.i(TAG, "onStart");
     }
 
@@ -103,6 +119,8 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
         } else {
             resume();
         }
+        if (isFirstVisit && callBackLifecycle != null) callBackLifecycle.onlyComplete();
+        if (callBackLifecycle != null) callBackLifecycle.complete();
         Log.i(TAG, "onResume");
     }
 
@@ -118,17 +136,19 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     public void onDestroyView() {
         super.onDestroyView();
         loseView();
+        if (callBackLifecycle != null) callBackLifecycle.logout();
+        isFirstVisit = false;
         Log.i(TAG, "onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        view = null;
-        if (callBackLifecycle != null)
-            callBackLifecycle.logOut();
         getLifecycle().removeObserver(vm);
+        if (callBackLifecycle != null) callBackLifecycle.onlyLogout();
         finish();
+        isFirstVisit = true;
+        v = null;
         Log.i(TAG, "onDestroy");
     }
 
@@ -158,6 +178,14 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
 
     public void setTagView(View tagView) {
         TagView = tagView;
+    }
+
+    public void setData(String key, Object obj) {
+        datas.put(key, obj);
+    }
+
+    public Object getData(String key) {
+        return datas.get(key);
     }
 
     public void setLastStckFragment(NaviBaseFragment lastStckFragment) {
@@ -207,9 +235,17 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     }
 
     public interface CallBackLifecycle {
-        void startUp();
+        void startup();
 
-        void logOut();
+        void complete();
+
+        void logout();
+
+        void onlyStartup();
+
+        void onlyComplete();
+
+        void onlyLogout();
     }
 
 
@@ -227,6 +263,25 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
         android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, fragment);
     }
+
+    public boolean isTop(Fragment fragment) {
+        if (null == activity) return false;
+        androidx.fragment.app.FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            List<Fragment> fragments = supportFragmentManager.getFragments();
+            if (null != fragments && fragments.size() > 0) {
+                if (fragment == fragments.get(0)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
 
     public void pop() {
         activity.getSupportFragmentManager().popBackStack();
