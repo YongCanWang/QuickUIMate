@@ -95,6 +95,21 @@ public class QuickClickEditText extends AppCompatEditText {
         requestFocus();
     }
 
+    public void setDrawablesLeft(int drawable) {
+        drawablesLeft = getResources().getDrawable(drawable);
+        drawablesLeft.setBounds(0, 0, drawablesLeft.getMinimumWidth(), drawablesLeft.getMinimumHeight());
+        setCompoundDrawables(drawablesLeft, null, drawablesRight, null);
+    }
+
+
+    public void setDrawablesRight(int drawable) {
+        drawablesRight = getResources().getDrawable(drawable);
+        drawablesRight.setBounds(0, 0, drawablesRight.getMinimumWidth(), drawablesRight.getMinimumHeight());
+        setCompoundDrawables(drawablesLeft, null, drawablesRight, null);
+    }
+
+
+
     public void setOnDrawablesClickListener(OnDrawablesClickListener onDrawablesClickListener) {
         this.onDrawablesClickListener = onDrawablesClickListener;
     }
