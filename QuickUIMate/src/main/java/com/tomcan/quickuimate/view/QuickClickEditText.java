@@ -17,7 +17,7 @@ public class QuickClickEditText extends AppCompatEditText {
     private final Context                  context;
     private       Drawable                 drawablesLeft;
     private       Drawable                 drawablesRight;
-    private       Rect                     drawablesRightLeft;
+    private       Rect                     drawablesLeftBounds;
     private       Rect                     drawablesRightBounds;
     private       OnDrawablesClickListener onDrawablesClickListener;
 
@@ -39,10 +39,12 @@ public class QuickClickEditText extends AppCompatEditText {
         setEditFocusable(true);
         drawablesLeft = getCompoundDrawables()[0];
         if (drawablesLeft != null)
-            drawablesRightLeft = drawablesLeft.getBounds();
+            drawablesLeftBounds = drawablesLeft.getBounds();
+        if (drawablesLeftBounds == null) drawablesLeftBounds = new Rect(0,0,0,0);
         drawablesRight = getCompoundDrawables()[2];
         if (drawablesRight != null)
             drawablesRightBounds = drawablesRight.getBounds();
+        if (drawablesRightBounds == null) drawablesRightBounds = new Rect(0,0,0,0);
     }
 
 
@@ -52,13 +54,13 @@ public class QuickClickEditText extends AppCompatEditText {
             case MotionEvent.ACTION_DOWN:
                 float down_X = event.getX();
                 float down_Y = event.getY();
-                if (drawablesLeft != null && down_X > getPaddingLeft()
-                        && down_X < getPaddingLeft() + drawablesRightLeft.right
+                if (drawablesLeft != null && drawablesLeftBounds != null && down_X > getPaddingLeft()
+                        && down_X < getPaddingLeft() + drawablesLeftBounds.right
                         && down_Y > getPaddingTop() && down_Y < getHeight() - getPaddingBottom()) {
                     setEditFocusable(false);
                     if (onDrawablesClickListener != null)
                         onDrawablesClickListener.leftDrawablesClick();
-                } else if (drawablesRight != null && down_X > getWidth() - (drawablesRightBounds.right + getPaddingRight())
+                } else if (drawablesRight != null && drawablesRightBounds != null && down_X > getWidth() - (drawablesRightBounds.right + getPaddingRight())
                         && down_X < getWidth() - (getPaddingRight())
                         && down_Y > getPaddingTop() && down_Y < getHeight() - getPaddingBottom()) {
                     setEditFocusable(false);
