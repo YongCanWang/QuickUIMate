@@ -12,6 +12,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tomcan.quickuimate.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
     private static int VIEW_FOOT_INDEX = 200000;
     private static OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
     private static OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener;
+    private boolean isShowLoadingView = false;
+
 
     @NonNull
     @Override
@@ -37,6 +41,8 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
             return new QuickViewHolder(headViews.get(viewType));
         } else if (null != footViews.get(viewType)) {
             return new QuickViewHolder(footViews.get(viewType));
+        } else if (viewType == (datas.size() + headViews.size() + footViews.size())) {
+            return new QuickViewHolder(View.inflate(parent.getContext(), R.layout.quikelistview_foot_view, null));
         }
         return new QuickViewHolder(getDataBinding(parent.getContext(), parent, setItemLayoutID()));
     }
@@ -52,6 +58,8 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             holder.itemView.setLayoutParams(layoutParams);
+        } else if (isShowLoadingView(position)) {
+
         } else {
             holder.itemView.setTag(position);
             holder.itemView.setOnClickListener(this);
@@ -62,7 +70,10 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
 
     @Override
     public int getItemCount() {
-        return null == datas || datas.size() == 0 ? 0 : datas.size() + headViews.size() + footViews.size();
+        if (isShowLoadingView)
+            return null == datas || datas.size() == 0 ? 0 : datas.size() + headViews.size() + footViews.size() + 1;
+        else
+            return null == datas || datas.size() == 0 ? 0 : datas.size() + headViews.size() + footViews.size();
     }
 
     @Override
@@ -70,6 +81,7 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
         if (isShowViewHead(position)) return headViews.keyAt(position);
         if (isShowViewFoot(position))
             return footViews.keyAt(Math.abs(position - (datas.size() + headViews.size())));
+        if (isShowLoadingView(position)) return datas.size() + headViews.size() + footViews.size();
         return super.getItemViewType(position);
     }
 
@@ -108,13 +120,28 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
         notifyDataSetChanged();
     }
 
-    public void addViewHead(View headView) {
+    public void addData(List<M> datas) {
+        if (null == datas) return;
+        this.datas.addAll(datas);
+        notifyDataSetChanged();
+    }
+
+    public void addHeadView(View headView) {
         headViews.put(headViews.size() + VIEW_HEAD_INDEX, headView);
     }
 
     public void addFootView(View footView) {
         footViews.put(footViews.size() + VIEW_FOOT_INDEX, footView);
     }
+
+    public void removeLastHeadView() {
+        headViews.remove(headViews.size() + VIEW_HEAD_INDEX);
+    }
+
+    public void removeLastFootView() {
+        footViews.remove(footViews.size() + VIEW_FOOT_INDEX);
+    }
+
 
     private boolean isShowViewHead(int position) {
         return position < headViews.size();
@@ -123,6 +150,15 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
     private boolean isShowViewFoot(int position) {
         return position >= datas.size() + headViews.size();
     }
+
+    private boolean isShowLoadingView(int position) {
+        return position >= datas.size() + headViews.size() + footViews.size();
+    }
+
+    public void setIsShowLoadingView(boolean isShow) {
+        this.isShowLoadingView = isShow;
+    }
+
 
     public void clear() {
         VIEW_HEAD_INDEX = 100000;
