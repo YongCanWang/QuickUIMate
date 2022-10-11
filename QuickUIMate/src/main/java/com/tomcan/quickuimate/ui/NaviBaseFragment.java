@@ -17,6 +17,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.tomcan.quickuimate.mate.FragmentMate;
 import com.tomcan.quickuimate.model.BaseViewModel;
 
 import java.util.HashMap;
@@ -284,16 +285,18 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
 
 
     public void pop() {
-        activity.getSupportFragmentManager().popBackStack();
+//        activity.getSupportFragmentManager().popBackStack();
+        FragmentMate.getInstance().pop();
     }
 
     public void remove() {
-        activity.getSupportFragmentManager().beginTransaction().remove(this).commit();
+//        activity.getSupportFragmentManager().beginTransaction().remove(this).commit();
+        FragmentMate.getInstance().remove();
     }
 
     public void popRemove() {
-        pop();
-        remove();
+        activity.getSupportFragmentManager().popBackStack();
+        FragmentMate.getInstance().remove();
     }
 
 
