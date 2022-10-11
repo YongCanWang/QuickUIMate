@@ -150,7 +150,7 @@ public class FragmentMate {
 
     public void pop() {
         activity.getSupportFragmentManager().popBackStack();
-        stacks.remove(stacks.get(stacks.size() - 1));
+        if (stacks.size() > 0) stacks.remove(stacks.get(stacks.size() - 1));
     }
 
     public void popAll() {
@@ -166,45 +166,59 @@ public class FragmentMate {
     }
 
     public void remove() {
-        fragmentManager.beginTransaction().remove(stacks.get(stacks.size() - 1)).commit();
-        stacks.remove(stacks.size() - 1);
+        if (stacks.size() > 0) {
+            fragmentManager.beginTransaction().remove(stacks.get(stacks.size() - 1)).commit();
+            stacks.remove(stacks.size() - 1);
+        }
     }
 
     public void removeAll() {
-        for (int i = stacks.size() - 1; i >= 0; i--)
-            fragmentManager.beginTransaction().remove(stacks.get(i)).commit();
-        stacks.clear();
+        if (stacks.size() > 0) {
+            for (int i = stacks.size() - 1; i >= 0; i--)
+                fragmentManager.beginTransaction().remove(stacks.get(i)).commit();
+            stacks.clear();
+        }
     }
 
     public void popRemove() {
         activity.getSupportFragmentManager().popBackStack();
-        fragmentManager.beginTransaction().remove(stacks.get(stacks.size() - 1)).commit();
-        stacks.remove(stacks.size() - 1);
+        if (stacks.size() > 0) {
+            fragmentManager.beginTransaction().remove(stacks.get(stacks.size() - 1)).commit();
+            stacks.remove(stacks.size() - 1);
+        }
+
     }
 
     public void popRemoveAll() {
-        for (int i = stacks.size() - 1; i >= 0; i--) {
-            fragmentManager.popBackStack();
-            fragmentManager.beginTransaction().remove(stacks.get(i)).commit();
+        if (stacks.size() > 0) {
+            for (int i = stacks.size() - 1; i >= 0; i--) {
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().remove(stacks.get(i)).commit();
+            }
+            stacks.clear();
         }
-        stacks.clear();
     }
 
 
     public void popBottomStacks() {
-        for (int i = stacks.size() - 2; i >= 0; i--)
-            fragmentManager.popBackStack();
+        if (stacks.size() > 0) {
+            for (int i = stacks.size() - 2; i >= 0; i--)
+                fragmentManager.popBackStack();
 
-        for (int i = stacks.size() - 2; i >= 0; i--)
-            stacks.remove(i);
+            for (int i = stacks.size() - 2; i >= 0; i--)
+                stacks.remove(i);
+
+        }
     }
 
     public void removeBottomStacks() {
-        for (int i = stacks.size() - 2; i >= 0; i--)
-            fragmentManager.beginTransaction().remove(stacks.get(i)).commit();
+        if (stacks.size() > 0) {
+            for (int i = stacks.size() - 2; i >= 0; i--)
+                fragmentManager.beginTransaction().remove(stacks.get(i)).commit();
 
-        for (int i = stacks.size() - 2; i >= 0; i--)
-            stacks.remove(i);
+            for (int i = stacks.size() - 2; i >= 0; i--)
+                stacks.remove(i);
+        }
     }
 
     public boolean isStacksEmpty() {
