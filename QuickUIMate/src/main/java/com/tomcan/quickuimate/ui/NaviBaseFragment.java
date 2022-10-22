@@ -134,6 +134,12 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop");
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         loseView();
