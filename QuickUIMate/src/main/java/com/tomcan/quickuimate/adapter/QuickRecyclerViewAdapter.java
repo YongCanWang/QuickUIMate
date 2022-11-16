@@ -121,7 +121,7 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
     }
 
     public void updateData(int position, M data) {
-        if (null == datas || position >= datas.size()) return;
+        if (null == datas || position < 0 || position >= datas.size()) return;
         this.datas.set(position, data);
         notifyItemChanged(position, data);
     }
@@ -130,6 +130,24 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
         if (null == datas) return;
         this.datas.addAll(datas);
         notifyDataSetChanged();
+    }
+
+    public void addData(M data) {
+        if (null == datas) return;
+        this.datas.add(data);
+        notifyItemInserted(datas.size());
+    }
+
+    public void addData(int position, M data) {
+        if (null == datas) return;
+        this.datas.add(position, data);
+        notifyItemInserted(position);
+    }
+
+    public void removeData(int position) {
+        if (null == datas || position < 0 || position >= datas.size()) return;
+        datas.remove(position);
+        notifyItemRemoved(position);
     }
 
     public void addHeadView(View headView) {
