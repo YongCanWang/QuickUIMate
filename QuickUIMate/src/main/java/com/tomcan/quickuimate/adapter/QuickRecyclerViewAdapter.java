@@ -120,6 +120,12 @@ public abstract class QuickRecyclerViewAdapter<M, V> extends
         notifyDataSetChanged();
     }
 
+    public void updateData(int position, M data) {
+        if (null == datas || position >= datas.size()) return;
+        this.datas.set(position, data);
+        notifyItemChanged(position, data);
+    }
+
     public void addData(List<M> datas) {
         if (null == datas) return;
         this.datas.addAll(datas);
