@@ -16,10 +16,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.tomcan.quickuimate.mate.FragmentMate;
 import com.tomcan.quickuimate.model.BaseViewModel;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,7 +77,11 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goBackHandler();
-        vm = initViewModel();
+        ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        assert genericSuperclass != null;
+        Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
+        Class<VM> vmClass = (Class<VM>) actualTypeArguments[1];
+        vm = new ViewModelProvider(this).get(vmClass);
         if (vm != null) getLifecycle().addObserver(vm);
         Log.i(TAG, "onCreate");
     }
@@ -161,8 +168,6 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
 
 
     public abstract int initViewID();
-
-    public abstract VM initViewModel();
 
     public abstract void setView();
 
