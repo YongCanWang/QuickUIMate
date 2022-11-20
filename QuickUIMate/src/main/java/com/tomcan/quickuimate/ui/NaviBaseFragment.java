@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBinderMapper;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.databinding.library.baseAdapters.DataBinderMapperImpl;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -46,6 +48,7 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     public static AppCompatActivity activity;
     public V binding;
     public VM vm;
+    private ParameterizedType genericSuperclass;
 
 
     public NaviBaseFragment() {
@@ -77,7 +80,7 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goBackHandler();
-        ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         assert genericSuperclass != null;
         Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
         Class<VM> vmClass = (Class<VM>) actualTypeArguments[1];
@@ -91,6 +94,10 @@ public abstract class NaviBaseFragment<V extends ViewDataBinding, VM extends Bas
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
         if (v == null) {
+//            Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
+//            assert genericSuperclass != null;
+//            Class<VM> vmClass = (Class<VM>) actualTypeArguments[0];
+//            DataBinderMapperImpl dataBinderMapper = new DataBinderMapperImpl();
             binding = DataBindingUtil.inflate(inflater, initViewID(), container, false);
             binding.setLifecycleOwner(this);
             v = binding.getRoot();

@@ -15,7 +15,7 @@ import com.tomcan.quickuimate.obs.IBaseViewModelLifecycle;
  * @description:
  * @date :2020/8/5 15:34
  */
-public class BaseViewModel extends AndroidViewModel implements IBaseViewModelLifecycle {
+public abstract class BaseViewModel extends AndroidViewModel implements IBaseViewModelLifecycle {
     public String TAG = this.getClass().getSimpleName();
     public final Application application;
     private LifecycleOwner owner;
