@@ -22,7 +22,7 @@ import java.util.List;
  * @description:
  * @date :2021/11/3 14:50
  */
-public abstract class QuickRecyclerViewAdapter<M, V> extends
+public abstract class QuickRecyclerViewAdapter<V, M> extends
         RecyclerView.Adapter<QuickRecyclerViewAdapter.QuickViewHolder> implements View.OnClickListener, View.OnLongClickListener {
     private final ArrayList<M> datas = new ArrayList<>();
     private static final SparseArrayCompat<View> headViews = new SparseArrayCompat<>();

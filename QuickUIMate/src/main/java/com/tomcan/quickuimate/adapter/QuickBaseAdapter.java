@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ViewDataBinding;
 
 import java.util.List;
 
@@ -15,27 +17,16 @@ import java.util.List;
  * @description:
  * @date :2021/4/16 10:34
  */
-public abstract class QuickBaseAdapter<T, V> extends android.widget.BaseAdapter {
-    public        Context                context;
-    private final ObservableArrayList<T> observableArrayList = new ObservableArrayList<>();
-    public        LayoutInflater         layoutInflater;
+public abstract class QuickBaseAdapter<V, M> extends BaseAdapter {
+    private final ObservableArrayList<M> observableArrayList = new ObservableArrayList<>();
+    public OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
 
     public QuickBaseAdapter() {
     }
 
-    public QuickBaseAdapter(Context context) {
-        this(context, null);
-    }
-
-    public QuickBaseAdapter(List<T> dataList) {
-        this(null, dataList);
-    }
-
-    public QuickBaseAdapter(Context context, List<T> dataList) {
-        this.context = context;
-        if (null != dataList) this.observableArrayList.addAll(dataList);
-        if (null != context)
-            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public QuickBaseAdapter(List<M> dataList) {
+        updateData(dataList);
     }
 
     @Override
@@ -44,7 +35,7 @@ public abstract class QuickBaseAdapter<T, V> extends android.widget.BaseAdapter 
     }
 
     @Override
-    public T getItem(int position) {
+    public M getItem(int position) {
         return observableArrayList.get(position);
     }
 
@@ -57,51 +48,91 @@ public abstract class QuickBaseAdapter<T, V> extends android.widget.BaseAdapter 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (null == convertView) {
-            V v = getDataBinding(parent.getContext(), parent, setLayoutId());
-            viewHolder = new ViewHolder(v);
-            convertView = getView(viewHolder);
+            ViewDataBinding dataBinding = getDataBinding(parent.getContext(), parent, setLayoutId());
+            viewHolder = new ViewHolder(dataBinding);
+            convertView = dataBinding.getRoot();
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        setData(viewHolder, position);
+        M m = getItem(position);
+        viewHolder.setPosition(position);
+        viewHolder.setM(m);
+        bindData((V) viewHolder.v, m);
         return convertView;
     }
 
 
     public abstract int setLayoutId();
 
-    public abstract View getView(ViewHolder viewHolder);
 
-    public abstract void setData(ViewHolder viewHolder, int position);
+    public abstract void bindData(V v, M m);
 
 
-    public void update(List<T> dataList) {
-        if (null == dataList) return;
+    public void updateData(List<M> datas) {
+        if (null == datas) return;
         this.observableArrayList.clear();
-        this.observableArrayList.addAll(dataList);
+        this.observableArrayList.addAll(datas);
         notifyDataSetChanged();
     }
 
-    public ObservableArrayList<T> getListDatas() {
+    public ObservableArrayList<M> getDatas() {
         return observableArrayList;
     }
 
-    public class ViewHolder {
-        public V v;
+    private class ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        private V v;
+        private M m;
+        private int position;
 
-        public ViewHolder(V v) {
-            this.v = v;
+        public ViewHolder(ViewDataBinding v) {
+            this.v = (V) v;
+            v.getRoot().setOnClickListener(this);
+            v.getRoot().setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (onItemClickListener != null) onItemClickListener.onItemClick(m, view, position);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (onItemLongClickListener != null) onItemLongClickListener.onLongClick(m);
+            return false;
+        }
+
+        private void setM(M m) {
+            this.m = m;
+        }
+
+        private void setPosition(int position) {
+            this.position = position;
         }
     }
 
-
-    private V getDataBinding(Context context, ViewGroup parent, int layoutId) {
-        // TODO 获取DataBinding对象涉及类的强制转换，考虑是否需要重写给子类，在子类中完成（纠结...(ー`´ー)）。
-        return (V) DataBindingUtil.inflate(getLayoutInflater(context), layoutId, parent, false);
+    public interface OnItemClickListener<M> {
+        void onItemClick(M m, View viwe, int position);
     }
 
-    public LayoutInflater getLayoutInflater(Context context) {
+    public interface OnItemLongClickListener<M> {
+        void onLongClick(M m);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+
+    private ViewDataBinding getDataBinding(Context context, ViewGroup parent, int layoutId) {
+        return DataBindingUtil.inflate(getLayoutInflater(context), layoutId, parent, false);
+    }
+
+    private LayoutInflater getLayoutInflater(Context context) {
         return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 }
