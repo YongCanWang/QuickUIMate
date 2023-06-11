@@ -98,6 +98,18 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
+    public void show(NaviBaseFragment fragment) {
+        if (fragment.isAdded()) {
+            fragmentManager.beginTransaction().show(fragment).commit();
+        }
+    }
+
+    public void hide(NaviBaseFragment fragment) {
+        if (fragment.isAdded()) {
+            fragmentManager.beginTransaction().hide(fragment).commit();
+        }
+    }
+
 
     public void replaceStack(NaviBaseFragment fragment) {
         fragmentManager.beginTransaction()
