@@ -25,6 +25,7 @@ import java.util.List;
 public abstract class QuickRecyclerViewAdapter<V, M> extends
         RecyclerView.Adapter<QuickRecyclerViewAdapter.QuickViewHolder> implements View.OnClickListener, View.OnLongClickListener {
     private final ArrayList<M> datas = new ArrayList<>();
+    private final ArrayList<String> indexIds = new ArrayList<>();// 通过id查询数据的索引
     private static final SparseArrayCompat<View> headViews = new SparseArrayCompat<>();
     private static final SparseArrayCompat<View> footViews = new SparseArrayCompat<>();
     private static int VIEW_HEAD_INDEX = 100000;
@@ -121,9 +122,18 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
     }
 
     public void updateData(int position, M data) {
-        if (null == datas || position < 0 || position >= datas.size()) return;
+        if (null == data || position < 0 || position >= datas.size()) return;
         this.datas.set(position, data);
         notifyItemChanged(position, data);
+    }
+
+    public void updateData(Data data) {
+        int index = indexIds.indexOf(data.indexID);
+        if (index != -1) {
+            updateData(index, (M) data);
+        } else {
+            addData(data);
+        }
     }
 
     public void addData(List<M> datas) {
@@ -133,21 +143,35 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
     }
 
     public void addData(M data) {
-        if (null == datas) return;
+        if (null == data) return;
         this.datas.add(data);
         notifyItemInserted(datas.size());
     }
 
     public void addData(int position, M data) {
-        if (null == datas) return;
+        if (null == data) return;
         this.datas.add(position, data);
         notifyItemInserted(position);
     }
 
+    public void addData(Data data) {
+        addData((M) data);
+        this.indexIds.add(data.indexID);
+    }
+
+
     public void removeData(int position) {
-        if (null == datas || position < 0 || position >= datas.size()) return;
+        if (position < 0 || position >= datas.size()) return;
         datas.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void removeData(Data data) {
+        int index = indexIds.indexOf(data.indexID);
+        if (index != -1) {
+            removeData(index);
+            indexIds.remove(index);
+        }
     }
 
     public void addHeadView(View headView) {
