@@ -221,11 +221,11 @@
     -keep public class * extends android.view
 
 
-    -keep public class com.tomcan.quickuimate.ui.BaseFragment {
+    -keep public class com.tomcan.quickui.v.QuickFragment {
      public <init>(...);
     }
 
-    -keepclassmembers class  com.tomcan.quickuimate.ui.BaseFragment {
+    -keepclassmembers class  com.tomcan.quickui.v.QuickFragment {
                  public void create**(...);
                  public * get**();
                  public void set**(...);
@@ -233,51 +233,51 @@
                  public void  dismiss**(...);
     }
 
-    -keep public interface com.tomcan.quickuimate.ui.BaseFragment$OnBaseFragListener{
+    -keep public interface com.tomcan.quickui.v.QuickFragment$OnBaseFragListener{
               *;
      }
 
-    -keep public interface com.tomcan.quickuimate.obs.OnStackObservable{
+    -keep public interface com.tomcan.quickui.obs.OnStackObservable{
                    *;
       }
 
 
-    -keep public class * extends com.tomcan.quickuimate.ui.BaseFragment
-#    -keep public class  com.tomcan.quickuimate.ui.NaviBaseFragment {
+    -keep public class * extends com.tomcan.quickui.v.QuickFragment
+#    -keep public class  com.tomcan.quickuimate.v.NaviBaseFragment {
 #
 #    }
-    -keep public class com.tomcan.quickuimate.mate.FragmentMate
+    -keep public class com.tomcan.quickui.mate.FragmentMate
 
 
-    -keep public class com.tomcan.quickuimate.adapter.*
-    -keepclassmembernames class com.tomcan.quickuimate.ui.NaviBaseFragment {
+    -keep public class com.tomcan.quickui.adapter.*
+    -keepclassmembernames class com.tomcan.quickui.v.QuickBaseFragment {
        android.content.Context context;
       androidx.appcompat.app.AppCompatActivity activity;
       android.view.View v; android.view.View TagView;
-      com.tomcan.quickuimate.ui.NaviBaseFragment lastStckFragment;
-      java.lang.String TAG; androidx.databinding.ViewDataBinding binding; com.tomcan.quickuimate.model.BaseViewModel vm;
+      com.tomcan.quickui.v.QuickBaseFragment lastStckFragment;
+      java.lang.String TAG; androidx.databinding.ViewDataBinding binding; com.tomcan.quickui.vm.QuickViewModel vm;
     }
 
-        -keepclassmembernames class com.tomcan.quickuimate.model.BaseViewModel {
+        -keepclassmembernames class com.tomcan.quickui.vm.QuickViewModel {
             public java.lang.String TAG;
             public  android.app.Application application;
         }
 
-        -keep public interface com.tomcan.quickuimate.ui.NaviBaseFragment$CallBackLifecycle {
+        -keep public interface com.tomcan.quickui.v.QuickBaseFragment$CallBackLifecycle {
                     *;
         }
 
-        -keep public interface com.tomcan.quickuimate.ui.NaviBaseFragment$BackHandlerInterface {
+        -keep public interface com.tomcan.quickui.v.QuickBaseFragment$BackHandlerInterface {
                         *;
         }
 
 
 
-    -keepclassmembers class  com.tomcan.quickuimate.ui.NaviBaseFragment {
+    -keepclassmembers class  com.tomcan.quickui.v.QuickBaseFragment {
 
                 public  int initViewID();
 
-                public  com.tomcan.quickuimate.model.BaseViewModel initViewModel();
+                public  com.tomcan.quickui.vm.QuickViewModel initViewModel();
 
                 public  void setView();
 
@@ -303,7 +303,7 @@
                  public void set**(...);
     }
 
-        -keepclassmembers class com.tomcan.quickuimate.mate.FragmentMate {
+        -keepclassmembers class com.tomcan.quickui.mate.FragmentMate {
             public ** getInstance();
             public void **Container(...);
             public void setAttachActivity(...);
