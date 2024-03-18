@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <com.tomcan.quickui.vi.QuickClickEditText
+    <com.tomcan.quickui.view.QuickClickEditText
         android:id="@+id/search_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

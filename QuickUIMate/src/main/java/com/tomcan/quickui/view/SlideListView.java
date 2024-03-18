@@ -1,4 +1,4 @@
-package com.tomcan.quickui.vi;
+package com.tomcan.quickui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

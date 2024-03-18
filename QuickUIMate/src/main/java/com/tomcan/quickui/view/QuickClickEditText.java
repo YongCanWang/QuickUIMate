@@ -1,4 +1,4 @@
-package com.tomcan.quickui.vi;
+package com.tomcan.quickui.view;
 
 import android.content.Context;
 import android.graphics.Rect;

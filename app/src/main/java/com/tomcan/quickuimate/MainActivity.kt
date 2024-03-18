@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tomcan.quickui.mate.FragmentMate
 import com.tomcan.quickui.v.QuickBaseFragment
-import com.tomcan.quickui.vi.QuickClickEditText
+import com.tomcan.quickui.view.QuickClickEditText
 import com.tomcan.quickui.vm.QuickViewModel
 import com.tomcan.quickuimate.view.HomeFragment
 
