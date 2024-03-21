@@ -26,12 +26,12 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
         RecyclerView.Adapter<QuickRecyclerViewAdapter.QuickViewHolder> implements View.OnClickListener, View.OnLongClickListener {
     private final ArrayList<M> datas = new ArrayList<>();
     private final ArrayList<String> indexIds = new ArrayList<>();// 通过id查询数据的索引
-    private static final SparseArrayCompat<View> headViews = new SparseArrayCompat<>();
-    private static final SparseArrayCompat<View> footViews = new SparseArrayCompat<>();
-    private static int VIEW_HEAD_INDEX = 100000;
-    private static int VIEW_FOOT_INDEX = 200000;
-    private static OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
-    private static OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener;
+    private final SparseArrayCompat<View> headViews = new SparseArrayCompat<>();
+    private final SparseArrayCompat<View> footViews = new SparseArrayCompat<>();
+    private int VIEW_HEAD_INDEX = 100000;
+    private int VIEW_FOOT_INDEX = 200000;
+    private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
+    private OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener;
     private boolean isShowLoadingView = false;
 
 
