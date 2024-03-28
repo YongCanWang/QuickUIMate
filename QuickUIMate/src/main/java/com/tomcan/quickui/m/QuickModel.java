@@ -1,5 +1,6 @@
 package com.tomcan.quickui.m;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.Lifecycle;
@@ -14,6 +15,8 @@ import com.tomcan.quickui.obs.IBaselLifecycle;
  */
 public class QuickModel implements IBaselLifecycle {
     public String TAG = this.getClass().getSimpleName();
+
+    public Application application;
 
     @Override
     public void onAny(LifecycleOwner owner, Lifecycle.Event event) {

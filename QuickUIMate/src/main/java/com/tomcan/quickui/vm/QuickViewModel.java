@@ -48,6 +48,7 @@ public abstract class QuickViewModel<M extends QuickModel> extends AndroidViewMo
         Class<M> vmClass = (Class<M>) actualTypeArguments[0];
         try {
             m = vmClass.newInstance();
+            m.application = application;
         } catch (IllegalAccessException e) {
             Log.i(TAG, e.toString());
 //            throw new RuntimeException(e);
