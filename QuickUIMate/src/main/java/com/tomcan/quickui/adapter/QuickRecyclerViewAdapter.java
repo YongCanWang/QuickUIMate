@@ -90,14 +90,14 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
     public void onClick(View v) {
         Integer position = (Integer) v.getTag();
         if (null != onRecyclerViewItemClickListener)
-            onRecyclerViewItemClickListener.itemView(v, position);
+            onRecyclerViewItemClickListener.itemView(v, position - headViews.size());
     }
 
     @Override
     public boolean onLongClick(View v) {
         Integer position = (Integer) v.getTag();
         if (null != onRecyclerViewItemLongClickListener)
-            return onRecyclerViewItemLongClickListener.itemView(v, position);
+            return onRecyclerViewItemLongClickListener.itemView(v, position - headViews.size());
         return true;
     }
 
@@ -114,17 +114,43 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
         }
     }
 
+    public void addData(List<M> datas) {
+        if (null == datas) return;
+        int size = this.datas.size();
+        this.datas.addAll(datas);
+        notifyItemRangeInserted(size + headViews.size(), datas.size());
+    }
+
+    public void addData(M data) {
+        if (null == data) return;
+        this.datas.add(data);
+        notifyItemInserted(datas.size() + headViews.size());
+    }
+
+    public void addData(int position, M data) {
+        if (null == data) return;
+        this.datas.add(position, data);
+        notifyItemInserted(position + headViews.size());
+    }
+
+    public void addData(Data data) {
+        addData((M) data);
+        this.indexIds.add(data.indexID);
+    }
+
     public void updateData(List<M> datas) {
         if (null == datas) return;
+        int size = this.datas.size();
         this.datas.clear();
+        notifyItemRangeChanged(headViews.size(), size);
         this.datas.addAll(datas);
-        notifyDataSetChanged();
+        notifyItemRangeChanged(headViews.size(), datas.size());
     }
 
     public void updateData(int position, M data) {
         if (null == data || position < 0 || position >= datas.size()) return;
         this.datas.set(position, data);
-        notifyItemChanged(position, data);
+        notifyItemChanged(position + headViews.size(), data);
     }
 
     public void updateData(Data data) {
@@ -136,34 +162,11 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
         }
     }
 
-    public void addData(List<M> datas) {
-        if (null == datas) return;
-        this.datas.addAll(datas);
-        notifyDataSetChanged();
-    }
-
-    public void addData(M data) {
-        if (null == data) return;
-        this.datas.add(data);
-        notifyItemInserted(datas.size());
-    }
-
-    public void addData(int position, M data) {
-        if (null == data) return;
-        this.datas.add(position, data);
-        notifyItemInserted(position);
-    }
-
-    public void addData(Data data) {
-        addData((M) data);
-        this.indexIds.add(data.indexID);
-    }
-
-
     public void removeData(int position) {
         if (position < 0 || position >= datas.size()) return;
         datas.remove(position);
-        notifyItemRemoved(position);
+        notifyItemRemoved(position + headViews.size());
+        notifyItemRangeChanged(position + headViews.size(), 1);
     }
 
     public void removeData(Data data) {
@@ -172,6 +175,22 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
             removeData(index);
             indexIds.remove(index);
         }
+    }
+
+    public void clear() {
+        int size = this.datas.size();
+        this.datas.clear();
+//        notifyItemRangeRemoved(headViews.size(), size);
+//        notifyItemRangeChanged(headViews.size(), size);
+        notifyDataSetChanged();
+    }
+
+    public void reset() {
+        VIEW_HEAD_INDEX = 100000;
+        VIEW_FOOT_INDEX = 200000;
+        headViews.clear();
+        footViews.clear();
+        clear();
     }
 
     public void addHeadView(View headView) {
@@ -205,14 +224,6 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
 
     public void setIsShowLoadingView(boolean isShow) {
         this.isShowLoadingView = isShow;
-    }
-
-
-    public void clear() {
-        VIEW_HEAD_INDEX = 100000;
-        VIEW_FOOT_INDEX = 200000;
-        headViews.clear();
-        footViews.clear();
     }
 
 
