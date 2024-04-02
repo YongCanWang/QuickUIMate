@@ -177,8 +177,16 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
         }
     }
 
-    public void clear() {
+    public void removeData(List<M> datas) {
+        if (null == datas) return;
         int size = this.datas.size();
+        this.datas.removeAll(datas);
+        notifyItemRangeRemoved(headViews.size(), size);
+        notifyItemRangeChanged(headViews.size(), datas.size());
+    }
+
+    public void clear() {
+//        int size = this.datas.size();
         this.datas.clear();
 //        notifyItemRangeRemoved(headViews.size(), size);
 //        notifyItemRangeChanged(headViews.size(), size);
