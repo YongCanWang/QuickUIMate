@@ -62,7 +62,7 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
         } else if (isShowLoadingView(position)) {
 
         } else {
-            holder.itemView.setTag(position);
+            holder.itemView.setTag(holder);
             holder.itemView.setOnClickListener(this);
             holder.itemView.setOnLongClickListener(this);
             bindData((V) holder.v, datas.get(position - headViews.size()));
@@ -88,16 +88,16 @@ public abstract class QuickRecyclerViewAdapter<V, M> extends
 
     @Override
     public void onClick(View v) {
-        Integer position = (Integer) v.getTag();
+        QuickViewHolder holder = (QuickViewHolder) v.getTag();
         if (null != onRecyclerViewItemClickListener)
-            onRecyclerViewItemClickListener.itemView(v, position - headViews.size());
+            onRecyclerViewItemClickListener.itemView(v, holder.getLayoutPosition() - headViews.size());
     }
 
     @Override
     public boolean onLongClick(View v) {
-        Integer position = (Integer) v.getTag();
+        QuickViewHolder holder = (QuickViewHolder) v.getTag();
         if (null != onRecyclerViewItemLongClickListener)
-            return onRecyclerViewItemLongClickListener.itemView(v, position - headViews.size());
+            return onRecyclerViewItemLongClickListener.itemView(v, holder.getLayoutPosition() - headViews.size());
         return true;
     }
 
