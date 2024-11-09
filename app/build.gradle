@@ -4,10 +4,11 @@ plugins {
 }
 
 android {
+    namespace "com.tomcan.quickuimate" // 空间名称
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.tomcan.quickuimate"
+        applicationId "com.tomcan.quickuimate" // app ID
         minSdk 21
         targetSdk 33
         versionCode 1
