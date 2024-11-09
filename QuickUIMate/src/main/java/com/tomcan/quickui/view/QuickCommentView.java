@@ -1,5 +1,6 @@
 package com.tomcan.quickui.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -36,15 +37,16 @@ public class QuickCommentView extends ViewGroup {
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
         measureChildren(widthMeasureSpec, heightMeasureSpec);
-        if(button == null)
-        button = new Button(context);
+        if (button == null)
+            button = new Button(context);
         if (textView == null)
-        textView = new TextView(context);
+            textView = new TextView(context);
     }
 
     @Override

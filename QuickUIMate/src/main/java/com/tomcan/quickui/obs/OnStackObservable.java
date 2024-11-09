@@ -1,6 +1,6 @@
 package com.tomcan.quickui.obs;
 
-import com.tomcan.quickui.v.QuickBaseFragment;
+import com.tomcan.quickui.v.QuickBaseFragment_V1_0;
 
 /**
  * @author TomCan
@@ -10,7 +10,7 @@ import com.tomcan.quickui.v.QuickBaseFragment;
 public interface OnStackObservable {
     void onChanged();
 
-    void onStacksInserted(QuickBaseFragment fragment);
+    void onStacksInserted(QuickBaseFragment_V1_0 fragment);
 
     void onStacksRemoved();
 }

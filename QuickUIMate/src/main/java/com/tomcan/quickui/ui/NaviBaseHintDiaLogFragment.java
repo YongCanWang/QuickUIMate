@@ -4,12 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.KeyEvent;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-
-import com.tomcan.quickui.v.QuickBaseFragment;
+import com.tomcan.quickui.v.QuickBaseFragment_V1_0;
 
 /**
  * @author TomCan
@@ -20,7 +18,7 @@ public class NaviBaseHintDiaLogFragment extends DialogFragment implements Dialog
     private final  String            TAG         = NaviBaseHintDiaLogFragment.this.getClass().getSimpleName();
     private        Context           context;
     private        AppCompatActivity activity;
-    private QuickBaseFragment naviBaseFragment;
+    private QuickBaseFragment_V1_0 naviBaseFragment;
     private static boolean           isKey;
     public         boolean           isFocusable = true;
 
@@ -28,7 +26,7 @@ public class NaviBaseHintDiaLogFragment extends DialogFragment implements Dialog
         this(null, true);
     }
 
-    public NaviBaseHintDiaLogFragment(QuickBaseFragment naviBaseFragment, boolean isFocusable) {
+    public NaviBaseHintDiaLogFragment(QuickBaseFragment_V1_0 naviBaseFragment, boolean isFocusable) {
         this.naviBaseFragment = naviBaseFragment;
         this.isFocusable = isFocusable;
     }
@@ -73,7 +71,7 @@ public class NaviBaseHintDiaLogFragment extends DialogFragment implements Dialog
     }
 
 
-    public void setAttachFragt(QuickBaseFragment naviBaseFragment) {
+    public void setAttachFragt(QuickBaseFragment_V1_0 naviBaseFragment) {
         this.naviBaseFragment = naviBaseFragment;
     }
 

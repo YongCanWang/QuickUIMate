@@ -33,7 +33,7 @@ import java.util.List;
  * @date :2019/3/20 9:17
  */
 @SuppressLint("LogNotTimber")
-public abstract class QuickBaseFragment<V extends ViewDataBinding, VM extends QuickViewModel> extends Fragment {
+public abstract class QuickBaseFragment_V1_0<V extends ViewDataBinding, VM extends QuickViewModel> extends Fragment {
     public String TAG = this.getClass().getSimpleName();
     public static Context context;
     public View v;
@@ -42,25 +42,25 @@ public abstract class QuickBaseFragment<V extends ViewDataBinding, VM extends Qu
     public BackHandlerInterface backHandlerInterface;
     public CallBackLifecycle callBackLifecycle;
     private boolean isFirstVisit;
-    public QuickBaseFragment lastStckFragment;
+    public QuickBaseFragment_V1_0 lastStckFragment;
     public static AppCompatActivity activity;
     public V binding;
     public VM vm;
     private ParameterizedType genericSuperclass;
 
 
-    public QuickBaseFragment() {
+    public QuickBaseFragment_V1_0() {
     }
 
-    public QuickBaseFragment(CallBackLifecycle callBackLifecycle) {
+    public QuickBaseFragment_V1_0(CallBackLifecycle callBackLifecycle) {
         this.callBackLifecycle = callBackLifecycle;
     }
 
-    public QuickBaseFragment(QuickBaseFragment lastStckFragment) {
+    public QuickBaseFragment_V1_0(QuickBaseFragment_V1_0 lastStckFragment) {
         this.lastStckFragment = lastStckFragment;
     }
 
-    public QuickBaseFragment(CallBackLifecycle callBackLifecycle, QuickBaseFragment lastStckFragment) {
+    public QuickBaseFragment_V1_0(CallBackLifecycle callBackLifecycle, QuickBaseFragment_V1_0 lastStckFragment) {
         this.callBackLifecycle = callBackLifecycle;
         this.lastStckFragment = lastStckFragment;
     }
@@ -205,11 +205,11 @@ public abstract class QuickBaseFragment<V extends ViewDataBinding, VM extends Qu
         return datas.get(key);
     }
 
-    public void setLastStckFragment(QuickBaseFragment lastStckFragment) {
+    public void setLastStckFragment(QuickBaseFragment_V1_0 lastStckFragment) {
         this.lastStckFragment = lastStckFragment;
     }
 
-    public QuickBaseFragment getLastStckFragment() {
+    public QuickBaseFragment_V1_0 getLastStckFragment() {
         return lastStckFragment;
     }
 
@@ -243,7 +243,7 @@ public abstract class QuickBaseFragment<V extends ViewDataBinding, VM extends Qu
      * 宿主Activity 必须实现该接口
      */
     public interface BackHandlerInterface {
-        void stackFragment(QuickBaseFragment stackFragment);
+        void stackFragment(QuickBaseFragment_V1_0 stackFragment);
     }
 
 
@@ -266,7 +266,7 @@ public abstract class QuickBaseFragment<V extends ViewDataBinding, VM extends Qu
     }
 
 
-    public void replaceStack(QuickBaseFragment fragment, int container) {
+    public void replaceStack(QuickBaseFragment_V1_0 fragment, int container) {
         activity.getSupportFragmentManager().beginTransaction()
                 .replace(container, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

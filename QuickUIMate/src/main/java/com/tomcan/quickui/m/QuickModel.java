@@ -13,7 +13,7 @@ import com.tomcan.quickui.obs.IBaselLifecycle;
  * @description:
  * @date :2024/3/18 10:43
  */
-public class QuickModel implements IBaselLifecycle {
+public abstract class QuickModel implements IBaselLifecycle {
     public String TAG = this.getClass().getSimpleName();
 
     public Application application;

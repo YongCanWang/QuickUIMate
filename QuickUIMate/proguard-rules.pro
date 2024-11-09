@@ -221,11 +221,11 @@
     -keep public class * extends android.view
 
 
-    -keep public class com.tomcan.quickui.v.QuickFragment {
+    -keep public class com.tomcan.quickui.v.LoadingQuickFragment {
      public <init>(...);
     }
 
-    -keepclassmembers class  com.tomcan.quickui.v.QuickFragment {
+    -keepclassmembers class  com.tomcan.quickui.v.LoadingQuickFragment {
                  public void create**(...);
                  public * get**();
                  public void set**(...);
@@ -233,7 +233,7 @@
                  public void  dismiss**(...);
     }
 
-    -keep public interface com.tomcan.quickui.v.QuickFragment$OnBaseFragListener{
+    -keep public interface com.tomcan.quickui.v.LoadingQuickFragment$OnBaseFragListener{
               *;
      }
 
@@ -242,7 +242,7 @@
       }
 
 
-    -keep public class * extends com.tomcan.quickui.v.QuickFragment
+    -keep public class * extends com.tomcan.quickui.v.LoadingQuickFragment
 #    -keep public class  com.tomcan.quickuimate.v.NaviBaseFragment {
 #
 #    }

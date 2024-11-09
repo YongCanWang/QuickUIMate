@@ -22,39 +22,29 @@ import java.lang.reflect.Type;
 public abstract class QuickViewModel<M extends QuickModel> extends AndroidViewModel implements IBaselLifecycle {
     public String TAG = this.getClass().getSimpleName();
     public final Application application;
-    private LifecycleOwner owner;
-
-    public M m;
-
+    public M model;
 
     public QuickViewModel(@NonNull Application application) {
         super(application);
-        Log.i(TAG, "QuickViewModel");
         this.application = application;
     }
 
     @Override
     public void onAny(LifecycleOwner owner, Lifecycle.Event event) {
-        this.owner = owner;
         Log.i(TAG, "onAny");
     }
 
     @Override
     public void onCreate() {
-        Log.i(TAG, "onCreate");
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         assert genericSuperclass != null;
         Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
         Class<M> vmClass = (Class<M>) actualTypeArguments[0];
         try {
-            m = vmClass.newInstance();
-            m.application = application;
-        } catch (IllegalAccessException e) {
+            model = vmClass.newInstance();
+            model.application = application;
+        } catch (IllegalAccessException | InstantiationException e) {
             Log.i(TAG, e.toString());
-//            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            Log.i(TAG, e.toString());
-//            throw new RuntimeException(e);
         }
     }
 
@@ -81,9 +71,5 @@ public abstract class QuickViewModel<M extends QuickModel> extends AndroidViewMo
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
-    }
-
-    public LifecycleOwner getOwner() {
-        return owner;
     }
 }

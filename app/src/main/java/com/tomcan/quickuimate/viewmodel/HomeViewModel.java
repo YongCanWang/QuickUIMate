@@ -1,23 +1,20 @@
 package com.tomcan.quickuimate.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.MutableLiveData;
-
-import com.tomcan.quickui.vm.QuickViewModel;
+import com.tomcan.quickui.vm.BaseViewModel;
 import com.tomcan.quickuimate.bean.UserBean;
 import com.tomcan.quickuimate.model.HomeModel;
-
 
 /**
  * @author Tom灿
  * @description: 框架示例-ViewModel
  * @date :2024/3/15 17:54
  */
-public class HomeViewModel extends QuickViewModel<HomeModel> {
+public class HomeViewModel extends BaseViewModel<HomeModel> {
     private ObservableField<String> nameObs = new ObservableField<>();
     private MutableLiveData<Integer> ageLive = new MutableLiveData<>();
     private MutableLiveData<String> addressLive = new MutableLiveData<>();
@@ -36,19 +33,19 @@ public class HomeViewModel extends QuickViewModel<HomeModel> {
     }
 
     public void getName() {
-        m.getName(nameObs);
+        model.getName(nameObs);
     }
 
     public void getAge() {
-        m.getAge(ageLive);
+        model.getAge(ageLive);
     }
 
     public void getAddress() {
-        m.getAddress(addressLive);
+        model.getAddress(addressLive);
     }
 
     public void getUser() {
-        m.getUser(userBeanObs);
+        model.getUser(userBeanObs);
     }
 
 

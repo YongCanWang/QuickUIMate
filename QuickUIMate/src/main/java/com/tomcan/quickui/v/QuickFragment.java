@@ -1,134 +1,142 @@
 package com.tomcan.quickui.v;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.tomcan.quickui.ui.HintDalogFragment;
 import com.tomcan.quickui.vm.QuickViewModel;
 
-import java.util.ArrayList;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 
 /**
  * @author TomCan
  * @description:
- * @date :2021/8/23 14:03
+ * @date :2019/3/20 9:17
  */
-public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickViewModel> extends QuickBaseFragment<V, VM>
-        implements HintDalogFragment.OnDalogFragtListener {
-
-    private OnBaseFragListener onBaseFragListener;
-
-    private HintDalogFragment hintDalogFragment;
+@SuppressLint("LogNotTimber")
+public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickViewModel> extends Fragment {
+    public String TAG = this.getClass().getSimpleName();
+    private boolean mIsFirstVisit = true;
+    public V binding;
+    public VM viewModel;
+    private ParameterizedType mGenericSuperclass;
+    private ViewModelProvider mViewModelProvider;
 
     public QuickFragment() {
-    }
 
-    public QuickFragment(CallBackLifecycle callBackLifecycle) {
-        super(callBackLifecycle);
-    }
-
-    public QuickFragment(QuickBaseFragment lastStckFragment) {
-        super(lastStckFragment);
-    }
-
-    public QuickFragment(CallBackLifecycle callBackLifecycle, QuickBaseFragment lastStckFragment) {
-        super(callBackLifecycle, lastStckFragment);
     }
 
     @Override
-    public void onDestroyView() {
-        dismissLoadingDalogFragt();
-        super.onDestroyView();
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 
-
-    /**
-     * 显示Loading DialogFragment
-     */
-    public void showLoadingDialogFragt() {
-        showLoadingDialogFragt(true);
-    }
-
-
-    /**
-     * 显示Loading DialogFragment
-     *
-     * @param isFocusable 是否获取事件焦点
-     */
-    public void showLoadingDialogFragt(boolean isFocusable) {
-        createLoadingDialogFragt(isFocusable);
-        if (!hintDalogFragment.isAdded() && !hintDalogFragment.isVisible()) {
-            hintDalogFragment.show(getFragmentManager(), "hintLoadingDalog");
-        }
-    }
-
-
-    /**
-     * 移除Loading FialohFragment
-     */
-    public void dismissLoadingDalogFragt() {
-        if (null != hintDalogFragment) {
-            hintDalogFragment.dismiss();
-        }
-    }
-
-    /**
-     * 创建Loading DialogFragment
-     */
-    private void createLoadingDialogFragt() {
-        createLoadingDialogFragt(true);
-    }
-
-    /**
-     * 创建Loading DialogFragment
-     *
-     * @param isFocusable View 是否获取事件焦点
-     */
-    private void createLoadingDialogFragt(boolean isFocusable) {
-        if (null == hintDalogFragment) {
-            hintDalogFragment = new HintDalogFragment(this, this, isFocusable);
-        }
-    }
-
-
-    /**
-     * Loading DoaLogFragment 销毁回调
-     */
     @Override
-    public void destroy() {
-        if (null != onBaseFragListener) onBaseFragListener.onDialogFragDismiss();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mGenericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        assert mGenericSuperclass != null;
+        Type[] actualTypeArguments = mGenericSuperclass.getActualTypeArguments();
+        Class<VM> vmClass = (Class<VM>) actualTypeArguments[1];
+        mViewModelProvider = new ViewModelProvider(this);
+        viewModel = mViewModelProvider.get(vmClass);
+        if (viewModel != null) getLifecycle().addObserver(viewModel);
     }
 
-
-    public interface OnBaseFragListener {
-        void onDialogFragDismiss();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, layout(), container, false);
+        }
+        return binding.getRoot();
     }
 
-    public void setOnBaseFragListener(OnBaseFragListener onBaseFragListener) {
-        this.onBaseFragListener = onBaseFragListener;
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mIsFirstVisit) {
+            addCallback();
+            onStarted();
+        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mIsFirstVisit) {
+            onReStart();
+        }
+        mIsFirstVisit = false;
+    }
 
-    public void setChildViewClickEnabled(ViewGroup viewGroup, boolean isClick, ArrayList<Integer> filtrationViews) {
-        int childCount = viewGroup.getChildCount();
-        if (childCount > 0) {
-            for (int i = 0; i < childCount; i++) {
-                View childAt = viewGroup.getChildAt(i);
-                if (null != childAt) {
-                    if (null != filtrationViews && filtrationViews.contains(childAt.getId()))
-                        continue;
-                    if (childAt instanceof ViewGroup) {
-                        childAt.setClickable(isClick);
-                        setChildViewClickEnabled((ViewGroup) childAt, isClick, filtrationViews);
-                    } else {
-                        childAt.setClickable(isClick);
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    private void addCallback() {
+        requireActivity().getOnBackPressedDispatcher().addCallback(this,
+                new OnBackPressedCallback(backPressedEnabled()) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        backPressed();
                     }
-                }
-            }
-        }
+                });
     }
 
+    public abstract int layout();
+
+    /**
+     * 在整个Activity生命周期中只调用一次
+     */
+    public abstract void onStarted();
+
+    /**
+     * 在整个Activity生命周期中可能会被调用多次，注意Activity首次被创建时不会被调用
+     */
+    public abstract void onReStart();
+
+    public boolean backPressedEnabled() {
+        return false;
+    }
+
+    public void backPressed() {
+
+    }
+
+    public <T extends QuickViewModel> T getQuickViewModel(Class<T> quickViewModel) {
+        T t = mViewModelProvider.get(quickViewModel);
+        getLifecycle().addObserver(t);
+        return t;
+    }
+
+    @Override
+    public void onDestroy() {
+        mIsFirstVisit = true;
+        if (binding != null) {
+            binding.unbind();
+            binding = null;
+        }
+        getLifecycle().removeObserver(viewModel);
+        mViewModelProvider = null;
+        viewModel = null;
+        super.onDestroy();
+    }
 }

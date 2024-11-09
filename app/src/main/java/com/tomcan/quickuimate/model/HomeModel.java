@@ -2,7 +2,7 @@ package com.tomcan.quickuimate.model;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
-import com.tomcan.quickui.m.QuickModel;
+import com.tomcan.quickui.m.BaseModel;
 import com.tomcan.quickuimate.BR;
 import com.tomcan.quickuimate.bean.UserBean;
 
@@ -11,8 +11,9 @@ import com.tomcan.quickuimate.bean.UserBean;
  * @description: 框架示例-Model
  * @date :2024/3/18 13:15
  */
-public class HomeModel extends QuickModel {
+public class HomeModel extends BaseModel {
     int index = 0;
+
     public void getName(ObservableField<String> nameObs) {
         nameObs.set("Li Hua" + ++index);
 //        nameObs.notifyPropertyChanged(BR._all);

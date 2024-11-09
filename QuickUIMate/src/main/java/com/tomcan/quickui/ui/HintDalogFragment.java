@@ -3,11 +3,9 @@ package com.tomcan.quickui.ui;
 import android.os.Bundle;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.tomcan.quickui.v.QuickBaseFragment;
+import com.tomcan.quickui.v.QuickBaseFragment_V1_0;
 
 /**
  * @author TomCan
@@ -31,12 +29,12 @@ public class HintDalogFragment extends NaviBaseHintDiaLogFragment {
         this(null, null, isFocusable);
     }
 
-    public HintDalogFragment(QuickBaseFragment naviBaseFragment, OnDalogFragtListener onDalogFragtListener) {
+    public HintDalogFragment(QuickBaseFragment_V1_0 naviBaseFragment, OnDalogFragtListener onDalogFragtListener) {
         this(naviBaseFragment, onDalogFragtListener, true);
     }
 
 
-    public HintDalogFragment(QuickBaseFragment naviBaseFragment, OnDalogFragtListener onDalogFragtListener, boolean isFocusable) {
+    public HintDalogFragment(QuickBaseFragment_V1_0 naviBaseFragment, OnDalogFragtListener onDalogFragtListener, boolean isFocusable) {
         super(naviBaseFragment, isFocusable);
         this.onDalogFragtListener = onDalogFragtListener;
     }
