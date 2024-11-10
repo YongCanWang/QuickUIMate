@@ -31,7 +31,6 @@ class WaterfallAdapter : StaggeredAdapter<ItemWaterfallBinding, InfoBean>() {
                     Glide.with(c)
                         .load(bitmap)
                         .placeholder(R.mipmap.ic_launcher)
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                         .override(getResultWidth()!!, getResultHeight()!!)
                         .centerCrop()
                         .into(it)

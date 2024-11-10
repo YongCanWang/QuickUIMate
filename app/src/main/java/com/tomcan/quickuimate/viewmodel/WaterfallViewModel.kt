@@ -19,5 +19,13 @@ class WaterfallViewModel(application: Application) : BaseViewModel<BaseModel>(ap
                 path = "$i.jpg"
             })
         }
+
+        for (i in 11 until 30) {
+            add(InfoBean().apply {
+                name = "王靖雯" + i
+                path = "8.jpg"
+            })
+        }
+
     }
 }
