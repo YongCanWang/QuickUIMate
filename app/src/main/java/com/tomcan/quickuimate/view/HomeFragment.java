@@ -1,7 +1,11 @@
 package com.tomcan.quickuimate.view;
 
+import android.content.Intent;
+import android.view.View;
+
 import androidx.databinding.Observable;
 import androidx.lifecycle.Observer;
+
 import com.tomcan.quickui.v.BaseFragment;
 import com.tomcan.quickuimate.R;
 import com.tomcan.quickuimate.databinding.FragmentHomeBinding;
@@ -56,6 +60,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         viewModel.getAge();
         viewModel.getAddress();
         viewModel.getUser();
+        binding.butWaterfall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(requireContext(), WaterfallActivity.class));
+            }
+        });
     }
 
     @Override

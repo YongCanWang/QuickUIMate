@@ -48,7 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
     }
 
     override fun onReStart() {
-        TODO("Not yet implemented")
+
     }
 
     override fun backPressed() {
