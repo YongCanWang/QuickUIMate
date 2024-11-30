@@ -36,7 +36,6 @@ public class LoadingDialog extends AlertDialog {
         create();
     }
 
-
     @Override
     public void create() {
         super.create();
@@ -63,7 +62,6 @@ public class LoadingDialog extends AlertDialog {
 //        init();
 //    }
 
-
     @Override
     public void show() {
         ivLoading.startAnimation(mAnim);
@@ -85,7 +83,6 @@ public class LoadingDialog extends AlertDialog {
         super.onStart();
     }
 
-
     @TargetApi(Build.VERSION_CODES.FROYO)
     @Override
     public void dismiss() {
@@ -93,12 +90,10 @@ public class LoadingDialog extends AlertDialog {
         super.dismiss();
     }
 
-
     private void init() {
         ivLoading = (ImageView) findViewById(R.id.iv_loading);
         initAnim();
     }
-
 
     private void initAnim() {
         // mAnim = new RotateAnimation(360, 0, Animation.RESTART, 0.5f, Animation.RESTART, 0.5f);
@@ -147,6 +142,4 @@ public class LoadingDialog extends AlertDialog {
     public void isDim(boolean isdim) {
         this.isdim = isdim;
     }
-
-
 }

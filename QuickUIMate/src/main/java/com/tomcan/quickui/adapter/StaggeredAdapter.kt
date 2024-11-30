@@ -2,20 +2,18 @@ package com.tomcan.quickui.adapter
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Rect
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 /**
  * @author Tom灿
  * @description: 瀑布流
  * @date: 2024/11/10 12:18
  */
-abstract class StaggeredAdapter<V, M> : BaseAdapter<V, M>() {
+abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
     private var mContext: Context? = null
     private var mTargetView: View? = null
     private var mBitmap: Bitmap? = null
@@ -23,12 +21,40 @@ abstract class StaggeredAdapter<V, M> : BaseAdapter<V, M>() {
     private var mHeight: Float? = null
     private val STANDARD_SCALE = 1.1 //当图片宽高比例大于STANDARD_SCALE时，采用3:4比例，小于时，则采用1:1比例
     private val SCALE = 4 * 1.0f / 3 //图片缩放比例
-    private var mSpace: Int = 20
+    private var mSpace: Int = 0
     private var mLayoutParams: LinearLayout.LayoutParams? = null
+
+    private constructor()
+
+    private constructor(space: Int) : this() {
+        mSpace = space
+    }
+
+    constructor(recyclerView: RecyclerView) : super(recyclerView, 0, 0)
+
+    constructor(recyclerView: RecyclerView, spaceHorizontal: Int) : super(
+        recyclerView,
+        spaceHorizontal,
+        0
+    )
+
+    constructor(spaceVertical: Int, recyclerView: RecyclerView) : super(
+        recyclerView,
+        0,
+        spaceVertical
+    )
+
+    constructor(recyclerView: RecyclerView, spaceHorizontal: Int, spaceVertical: Int) : super(
+        recyclerView,
+        spaceHorizontal,
+        spaceVertical
+    )
 
     private fun setTargetViewStaggered() {
         //计算图片宽高
-        val itemWidth = (getScreenWidth(mContext!!) - mSpace) / 2
+        var spanCount = getSpanCount(mRecyclerView())
+        val itemWidth =
+            (getScreenWidth(mContext!!) - mSpaceHorizontal() * (spanCount - 1)) / spanCount
         mLayoutParams = mTargetView?.layoutParams as LinearLayout.LayoutParams
         mLayoutParams?.width = itemWidth
         val scale = (mBitmap?.height?.toFloat()!!) / (mBitmap?.width?.toFloat()!!)
@@ -66,6 +92,10 @@ abstract class StaggeredAdapter<V, M> : BaseAdapter<V, M>() {
         setTargetViewStaggered()
     }
 
+    fun setSpace(space: Int) {
+        mSpace = space
+    }
+
     fun getResultWidth() = mLayoutParams?.width
 
     fun getResultHeight() = mLayoutParams?.height
@@ -82,20 +112,5 @@ abstract class StaggeredAdapter<V, M> : BaseAdapter<V, M>() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getRealMetrics(displayMetrics)
         return displayMetrics.heightPixels
-    }
-
-    private class StaggeredItemDecoration : ItemDecoration() {
-        override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
-            super.getItemOffsets(outRect, itemPosition, parent)
-        }
-
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            super.getItemOffsets(outRect, view, parent, state)
-        }
     }
 }

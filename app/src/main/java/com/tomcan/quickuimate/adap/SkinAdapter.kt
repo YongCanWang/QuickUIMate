@@ -4,27 +4,29 @@ import android.graphics.BitmapFactory
 import android.graphics.Rect
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tomcan.quickui.adapter.StaggeredAdapter
 import com.tomcan.quickuimate.R
-import com.tomcan.quickuimate.bean.InfoBean
-import com.tomcan.quickuimate.databinding.ItemWaterfallBinding
+import com.tomcan.quickuimate.bean.Skin.SkinBean
+import com.tomcan.quickuimate.databinding.ItemSkinBinding
 
 /**
  * @author Tom灿
  * @description:
  * @date: 2024/11/10 11:11
  */
-class WaterfallAdapter(recyclerView: RecyclerView) : StaggeredAdapter<ItemWaterfallBinding, InfoBean>(recyclerView) {
+class SkinAdapter(recyclerView: RecyclerView, spaceHorizontal: Int, spaceVertical: Int) :
+    StaggeredAdapter<ItemSkinBinding, SkinBean>(recyclerView, spaceHorizontal, spaceVertical) {
 
-    override fun layout() = R.layout.item_waterfall
+    override fun layout() = R.layout.item_skin
 
-    override fun bindData(v: ItemWaterfallBinding?, m: InfoBean?) {
-        v?.info = m
+    override fun bindData(v: ItemSkinBinding?, m: SkinBean?) {
+        v?.skin = m
         v?.ivImag?.context?.let { c ->
-            c.assets?.open("imag/" + m?.path).let { b ->
+            c.assets?.open("skin/" + m?.path).let { b ->
                 val mOptions = BitmapFactory.Options()
                 mOptions.inScaled = false
+//                mOptions.inJustDecodeBounds = false
+                mOptions.inSampleSize = 1
                 val bitmap = BitmapFactory.decodeStream(b, Rect(), mOptions)!!
                 v?.ivImag.let {
                     setTargetView(c, it, bitmap)
@@ -32,8 +34,8 @@ class WaterfallAdapter(recyclerView: RecyclerView) : StaggeredAdapter<ItemWaterf
                     Glide.with(c)
                         .load(bitmap)
                         .placeholder(R.mipmap.ic_launcher)
-                        .override(getResultWidth()!!, getResultHeight()!!)
-                        .centerCrop()
+//                        .override(getResultWidth()!!, getResultHeight()!!)
+//                        .centerCrop()
                         .into(it)
                 }
                 b?.close()

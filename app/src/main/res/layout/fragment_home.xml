@@ -61,5 +61,11 @@
             android:layout_height="wrap_content"
             android:text="瀑布流" />
 
+        <Button
+            android:id="@+id/but_skin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="瀑布流2" />
+
     </LinearLayout>
 </layout>

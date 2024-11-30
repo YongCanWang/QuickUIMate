@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.WaterfallActivity" />
+        <activity android:name=".view.SkinActivity" />
     </application>
 
 </manifest>

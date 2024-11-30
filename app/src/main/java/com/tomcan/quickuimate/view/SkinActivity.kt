@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tomcan.quickui.v.BaseActivity
 import com.tomcan.quickuimate.R
-import com.tomcan.quickuimate.adap.WaterfallAdapter
+import com.tomcan.quickuimate.adap.SkinAdapter
 import com.tomcan.quickuimate.databinding.ActivityWaterfallBinding
 import com.tomcan.quickuimate.viewmodel.WaterfallViewModel
 
@@ -14,16 +14,16 @@ import com.tomcan.quickuimate.viewmodel.WaterfallViewModel
  * @description: 瀑布流布局
  * @date: 2024/11/10 10:37
  */
-class WaterfallActivity : BaseActivity<ActivityWaterfallBinding, WaterfallViewModel>() {
+class SkinActivity : BaseActivity<ActivityWaterfallBinding, WaterfallViewModel>() {
 
     override fun layout() = R.layout.activity_waterfall
 
     override fun onStarted() {
         addGridLayoutManager(binding.rvList)
-        binding.rvList.adapter = WaterfallAdapter(binding.rvList).apply {
-            addData(viewModel.getData())
+        binding.rvList.adapter = SkinAdapter(binding.rvList, 20, 10).apply {
+            addData(viewModel.getSkinData())
             setOnItemClickListener { view, position ->
-                Toast.makeText(this@WaterfallActivity, "" + position, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SkinActivity, "" + position, Toast.LENGTH_SHORT).show()
             }
         }
     }
