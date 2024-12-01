@@ -6,6 +6,8 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -53,8 +55,15 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
     private fun setTargetViewStaggered() {
         //计算图片宽高
         var spanCount = getSpanCount(mRecyclerView())
+        //  通过RecyclerView宽度计算
         val itemWidth =
-            (getScreenWidth(mContext!!) - mSpaceHorizontal() * (spanCount - 1)) / spanCount
+            (mRecyclerView().measuredWidth - mSpaceHorizontal() * (spanCount - 1) -
+                    (mRecyclerView().paddingLeft + mRecyclerView().paddingRight)) / spanCount
+        //  通过屏幕宽度计算
+//        val itemWidth = (getScreenWidth(mContext!!) - mSpaceHorizontal() * (spanCount - 1) -
+//                (mRecyclerView().marginLeft + mRecyclerView().marginRight)
+//                - (mRecyclerView().paddingLeft + mRecyclerView().paddingRight)) / spanCount
+
         mLayoutParams = mTargetView?.layoutParams as LinearLayout.LayoutParams
         mLayoutParams?.width = itemWidth
         val scale = (mBitmap?.height?.toFloat()!!) / (mBitmap?.width?.toFloat()!!)
