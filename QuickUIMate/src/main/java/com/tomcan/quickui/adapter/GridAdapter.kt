@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.tomcan.quickui.utils.Utils
 
 /**
  * @author Tom灿
@@ -33,9 +34,9 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
 
     constructor(recyclerView: RecyclerView, spaceHorizontal: Int, spaceVertical: Int) : this() {
         this.mRecyclerView = recyclerView
-        mSpaceHorizontal = spaceHorizontal
-        mSpaceVertical = spaceVertical
-        mRecyclerView.addItemDecoration(SpacesItemDecoration(spaceHorizontal, spaceVertical))
+        mSpaceHorizontal =  Utils.dp2px(mRecyclerView.context, spaceHorizontal.toFloat())
+        mSpaceVertical =  Utils.dp2px(mRecyclerView.context, spaceVertical.toFloat())
+        mRecyclerView.addItemDecoration(SpacesItemDecoration(mSpaceHorizontal, mSpaceVertical))
     }
 
     private class SpacesItemDecoration : RecyclerView.ItemDecoration {
