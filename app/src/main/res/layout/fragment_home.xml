@@ -56,6 +56,12 @@
             android:text="HomeFragment" />
 
         <Button
+            android:id="@+id/but_grid_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="网格" />
+
+        <Button
             android:id="@+id/but_waterfall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

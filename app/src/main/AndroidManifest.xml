@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".view.WaterfallActivity" />
         <activity android:name=".view.SkinActivity" />
+        <activity android:name=".view.GridListActivity" />
     </application>
 
 </manifest>
