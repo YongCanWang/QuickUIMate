@@ -1,4 +1,4 @@
-package com.tomcan.quickui.vm;
+package com.tomcan.frame.vm;
 
 import android.app.Application;
 import android.util.Log;
@@ -8,8 +8,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.tomcan.quickui.m.QuickModel;
-import com.tomcan.quickui.obs.IBaselLifecycle;
+import com.tomcan.frame.m.QuickModel;
+import com.tomcan.frame.obs.IBaselLifecycle;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

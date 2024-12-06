@@ -1,7 +1,7 @@
-package com.tomcan.quickui.vm
+package com.tomcan.frame.vm
 
 import android.app.Application
-import com.tomcan.quickui.m.BaseModel
+import com.tomcan.frame.m.BaseModel
 
 /**
  * @author Tom灿

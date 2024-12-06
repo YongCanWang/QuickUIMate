@@ -1,4 +1,4 @@
-package com.tomcan.quickui.v;
+package com.tomcan.frame.v;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.databinding.ViewDataBinding;
 
 import com.tomcan.quickui.ui.HintDalogFragment;
-import com.tomcan.quickui.vm.QuickViewModel;
+import com.tomcan.frame.vm.QuickViewModel;
 
 import java.util.ArrayList;
 

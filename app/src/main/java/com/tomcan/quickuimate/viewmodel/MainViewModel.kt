@@ -1,7 +1,7 @@
 package com.tomcan.quickuimate.viewmodel
 
 import android.app.Application
-import com.tomcan.quickui.vm.BaseViewModel
+import com.tomcan.frame.vm.BaseViewModel
 import com.tomcan.quickuimate.model.MainModel
 
 /**

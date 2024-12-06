@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import com.tomcan.quickui.v.QuickBaseFragment_V1_0;
+import com.tomcan.frame.v.QuickBaseFragment_V1_0;
 
 /**
  * @author TomCan

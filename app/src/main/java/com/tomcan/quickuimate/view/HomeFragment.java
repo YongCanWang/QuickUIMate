@@ -5,7 +5,7 @@ import android.content.Intent;
 import androidx.databinding.Observable;
 import androidx.lifecycle.Observer;
 
-import com.tomcan.quickui.v.BaseFragment;
+import com.tomcan.frame.v.BaseFragment;
 import com.tomcan.quickuimate.R;
 import com.tomcan.quickuimate.databinding.FragmentHomeBinding;
 import com.tomcan.quickuimate.viewmodel.HomeViewModel;

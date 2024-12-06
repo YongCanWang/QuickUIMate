@@ -221,11 +221,11 @@
     -keep public class * extends android.view
 
 
-    -keep public class com.tomcan.quickui.v.LoadingQuickFragment {
+    -keep public class com.tomcan.frame.v.LoadingQuickFragment {
      public <init>(...);
     }
 
-    -keepclassmembers class  com.tomcan.quickui.v.LoadingQuickFragment {
+    -keepclassmembers class  com.tomcan.frame.v.LoadingQuickFragment {
                  public void create**(...);
                  public * get**();
                  public void set**(...);
@@ -233,16 +233,16 @@
                  public void  dismiss**(...);
     }
 
-    -keep public interface com.tomcan.quickui.v.LoadingQuickFragment$OnBaseFragListener{
+    -keep public interface com.tomcan.frame.v.LoadingQuickFragment$OnBaseFragListener{
               *;
      }
 
-    -keep public interface com.tomcan.quickui.obs.OnStackObservable{
+    -keep public interface com.tomcan.quickui.mate.OnStackObservable{
                    *;
       }
 
 
-    -keep public class * extends com.tomcan.quickui.v.LoadingQuickFragment
+    -keep public class * extends com.tomcan.frame.v.LoadingQuickFragment
 #    -keep public class  com.tomcan.quickuimate.v.NaviBaseFragment {
 #
 #    }
@@ -255,10 +255,10 @@
       androidx.appcompat.app.AppCompatActivity activity;
       android.view.View v; android.view.View TagView;
       com.tomcan.quickui.v.QuickBaseFragment lastStckFragment;
-      java.lang.String TAG; androidx.databinding.ViewDataBinding binding; com.tomcan.quickui.vm.QuickViewModel vm;
+      java.lang.String TAG; androidx.databinding.ViewDataBinding binding; com.tomcan.frame.vm.QuickViewModel vm;
     }
 
-        -keepclassmembernames class com.tomcan.quickui.vm.QuickViewModel {
+        -keepclassmembernames class com.tomcan.frame.vm.QuickViewModel {
             public java.lang.String TAG;
             public  android.app.Application application;
         }
@@ -277,7 +277,7 @@
 
                 public  int initViewID();
 
-                public  com.tomcan.quickui.vm.QuickViewModel initViewModel();
+                public  com.tomcan.frame.vm.QuickViewModel initViewModel();
 
                 public  void setView();
 

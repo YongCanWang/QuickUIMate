@@ -1,4 +1,4 @@
-package com.tomcan.quickui.obs;
+package com.tomcan.frame.obs;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;

@@ -4,7 +4,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.tomcan.quickui.v.BaseActivity
+import com.tomcan.frame.v.BaseActivity
 import com.tomcan.quickuimate.R
 import com.tomcan.quickuimate.adap.GridListAdapter
 import com.tomcan.quickuimate.databinding.ActivityGridListBinding

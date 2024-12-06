@@ -1,4 +1,4 @@
-package com.tomcan.quickui.v
+package com.tomcan.frame.v
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import com.tomcan.quickui.vm.QuickViewModel
+import com.tomcan.frame.vm.QuickViewModel
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 

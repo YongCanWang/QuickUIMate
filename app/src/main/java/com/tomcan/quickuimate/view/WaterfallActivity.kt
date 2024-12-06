@@ -3,7 +3,7 @@ package com.tomcan.quickuimate.view
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.tomcan.quickui.v.BaseActivity
+import com.tomcan.frame.v.BaseActivity
 import com.tomcan.quickuimate.R
 import com.tomcan.quickuimate.adap.WaterfallAdapter
 import com.tomcan.quickuimate.databinding.ActivityWaterfallBinding

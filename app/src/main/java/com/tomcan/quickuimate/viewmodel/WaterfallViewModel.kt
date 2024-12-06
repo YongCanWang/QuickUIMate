@@ -2,8 +2,8 @@ package com.tomcan.quickuimate.viewmodel
 
 import android.app.Application
 import com.google.gson.Gson
-import com.tomcan.quickui.m.BaseModel
-import com.tomcan.quickui.vm.BaseViewModel
+import com.tomcan.frame.m.BaseModel
+import com.tomcan.frame.vm.BaseViewModel
 import com.tomcan.quickuimate.bean.InfoBean
 import com.tomcan.quickuimate.bean.Skin
 import java.io.BufferedReader

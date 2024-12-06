@@ -1,6 +1,6 @@
 package com.tomcan.quickuimate.model
 
-import com.tomcan.quickui.m.BaseModel
+import com.tomcan.frame.m.BaseModel
 
 /**
  * @author Tom灿

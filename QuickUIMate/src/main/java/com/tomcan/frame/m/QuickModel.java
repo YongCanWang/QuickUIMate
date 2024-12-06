@@ -1,4 +1,4 @@
-package com.tomcan.quickui.m;
+package com.tomcan.frame.m;
 
 import android.app.Application;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.tomcan.quickui.obs.IBaselLifecycle;
+import com.tomcan.frame.obs.IBaselLifecycle;
 
 /**
  * @author Tom灿

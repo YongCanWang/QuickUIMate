@@ -2,7 +2,7 @@ package com.tomcan.quickuimate.model;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
-import com.tomcan.quickui.m.BaseModel;
+import com.tomcan.frame.m.BaseModel;
 import com.tomcan.quickuimate.BR;
 import com.tomcan.quickuimate.bean.UserBean;
 

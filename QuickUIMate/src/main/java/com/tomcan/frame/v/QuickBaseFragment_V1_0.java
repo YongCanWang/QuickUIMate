@@ -1,4 +1,4 @@
-package com.tomcan.quickui.v;
+package com.tomcan.frame.v;
 
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.tomcan.quickui.mate.FragmentMate;
-import com.tomcan.quickui.vm.QuickViewModel;
+import com.tomcan.frame.vm.QuickViewModel;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

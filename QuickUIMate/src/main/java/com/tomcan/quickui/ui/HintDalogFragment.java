@@ -5,7 +5,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.tomcan.quickui.v.QuickBaseFragment_V1_0;
+import com.tomcan.frame.v.QuickBaseFragment_V1_0;
 
 /**
  * @author TomCan

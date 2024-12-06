@@ -1,4 +1,4 @@
-package com.tomcan.quickui.v;
+package com.tomcan.frame.v;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,7 +14,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.tomcan.quickui.vm.QuickViewModel;
+import com.tomcan.frame.vm.QuickViewModel;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

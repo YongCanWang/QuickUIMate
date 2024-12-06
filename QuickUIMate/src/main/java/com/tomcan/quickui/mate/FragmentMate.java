@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.tomcan.quickui.R;
-import com.tomcan.quickui.obs.OnStackObservable;
-import com.tomcan.quickui.v.QuickBaseFragment_V1_0;
+import com.tomcan.frame.v.QuickBaseFragment_V1_0;
 
 /**
  * @author TomCan

@@ -1,4 +1,4 @@
-package com.tomcan.quickui.m
+package com.tomcan.frame.m
 
 /**
  * @author Tom灿

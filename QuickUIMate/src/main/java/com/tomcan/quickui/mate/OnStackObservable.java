@@ -1,6 +1,6 @@
-package com.tomcan.quickui.obs;
+package com.tomcan.quickui.mate;
 
-import com.tomcan.quickui.v.QuickBaseFragment_V1_0;
+import com.tomcan.frame.v.QuickBaseFragment_V1_0;
 
 /**
  * @author TomCan

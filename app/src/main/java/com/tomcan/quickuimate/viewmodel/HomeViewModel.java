@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.MutableLiveData;
-import com.tomcan.quickui.vm.BaseViewModel;
+import com.tomcan.frame.vm.BaseViewModel;
 import com.tomcan.quickuimate.bean.UserBean;
 import com.tomcan.quickuimate.model.HomeModel;
 
