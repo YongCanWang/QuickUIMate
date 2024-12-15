@@ -31,7 +31,6 @@ public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickV
     private boolean mIsFirstVisit = true;
     public V binding;
     public VM viewModel;
-    private ParameterizedType mGenericSuperclass;
     private ViewModelProvider mViewModelProvider;
 
     public QuickFragment() {
@@ -46,12 +45,14 @@ public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGenericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        ParameterizedType  mGenericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         assert mGenericSuperclass != null;
         Type[] actualTypeArguments = mGenericSuperclass.getActualTypeArguments();
-        Class<VM> vmClass = (Class<VM>) actualTypeArguments[1];
         mViewModelProvider = new ViewModelProvider(this);
-        viewModel = mViewModelProvider.get(vmClass);
+        if (actualTypeArguments.length > 1) {
+            Class<VM> vmClass = (Class<VM>) actualTypeArguments[1];
+            viewModel = mViewModelProvider.get(vmClass);
+        }
         if (viewModel != null) getLifecycle().addObserver(viewModel);
     }
 
@@ -134,9 +135,11 @@ public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickV
             binding.unbind();
             binding = null;
         }
-        getLifecycle().removeObserver(viewModel);
+        if (viewModel != null) {
+            getLifecycle().removeObserver(viewModel);
+            viewModel = null;
+        }
         mViewModelProvider = null;
-        viewModel = null;
         super.onDestroy();
     }
 }

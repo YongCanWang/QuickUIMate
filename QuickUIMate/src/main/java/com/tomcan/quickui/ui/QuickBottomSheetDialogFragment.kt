@@ -8,8 +8,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tomcan.frame.vm.QuickViewModel
+import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
@@ -23,19 +25,12 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
     val TAG: String = javaClass.simpleName
     private var mIsFirstVisit = true
     lateinit var binding: V
-    lateinit var viewModel: VM
-    private var mGenericSuperclass: ParameterizedType? = null
+    val viewModel: VM? by lazy { getLazyViewModel() } // TODO 可为null 待优化
     private var mViewModelProvider: ViewModelProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mGenericSuperclass = javaClass.genericSuperclass as ParameterizedType
-        checkNotNull(mGenericSuperclass)
-        val actualTypeArguments: Array<out Type>? = mGenericSuperclass?.actualTypeArguments
-        val vmClass = actualTypeArguments?.get(1) as Class<VM>
         mViewModelProvider = ViewModelProvider(this)
-        viewModel = mViewModelProvider?.get<VM>(vmClass)!!
-        viewModel.let { lifecycle.addObserver(it) }
     }
 
     override fun onCreateView(
@@ -63,6 +58,21 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
             onReStart()
         }
         mIsFirstVisit = false
+    }
+
+    private fun getLazyViewModel(): VM? {
+        val mGenericSuperclass = javaClass.genericSuperclass as ParameterizedType
+        val actualTypeArguments: Array<out Type>? = mGenericSuperclass?.actualTypeArguments
+        actualTypeArguments?.takeIf { it.size > 1 }?.let {
+            val vmClass = actualTypeArguments[1] as Class<VM>
+            mViewModelProvider?.get(vmClass)?.let {
+                lifecycleScope.launch {
+                    lifecycle.addObserver(it)
+                }
+                return it
+            }
+        }
+        return null
     }
 
     private fun addCallback() {
@@ -104,7 +114,9 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
     override fun onDestroy() {
         mIsFirstVisit = true
         binding.unbind()
-        lifecycle.removeObserver(viewModel)
+        viewModel?.let {
+            lifecycle.removeObserver(it)
+        }
         mViewModelProvider = null
         super.onDestroy()
     }
