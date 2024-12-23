@@ -69,6 +69,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 MyBottomFragmentDialog myBottomFragmentDialog = new MyBottomFragmentDialog();
                 myBottomFragmentDialog.show(requireActivity().getSupportFragmentManager(),
                         myBottomFragmentDialog.getTag());
+
+//                MyBottomDialog myBottomDialog = new MyBottomDialog(requireContext());
+//                myBottomDialog.show();
             }
         });
     }

@@ -17,7 +17,7 @@ import java.lang.reflect.Type
  */
 abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
     AppCompatActivity() {
-    val TAG: String = javaClass.simpleName
+    open val TAG: String = javaClass.simpleName
     private var mIsFirstVisit = true
     lateinit var binding: V
     lateinit var viewModel: VM

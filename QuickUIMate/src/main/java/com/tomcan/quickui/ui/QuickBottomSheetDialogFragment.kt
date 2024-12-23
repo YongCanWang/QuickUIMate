@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -23,10 +22,10 @@ import java.lang.reflect.Type
  */
 abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickViewModel<*>> :
     BottomSheetDialogFragment() {
-    val TAG: String = javaClass.simpleName
+    open val TAG: String = javaClass.simpleName
     private var mIsFirstVisit = true
     lateinit var binding: V
-    val viewModel: VM? by lazy { getLazyViewModel() } // TODO 可为null 待优化
+    open val viewModel: VM? by lazy { getLazyViewModel() } // TODO 可为null 待优化
     private var mViewModelProvider: ViewModelProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

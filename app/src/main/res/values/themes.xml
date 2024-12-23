@@ -15,19 +15,22 @@
     </style>
 
 
-<!--    <style name="MyBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">-->
-    <style name="MyBottomSheetDialog"  parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="MyBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <!--    <style name="MyBottomSheetDialog"  parent="Theme.MaterialComponents.Light.BottomSheetDialog">-->
         <item name="bottomSheetStyle">@style/BottomSheetStyleWrapper</item>
-        <item name="android:background">@android:color/transparent</item>
+        <!--        <item name="android:background">@android:color/transparent</item>-->
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:backgroundDimAmount">0.8</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="BottomSheetStyleWrapper" parent="Widget.MaterialComponents.BottomSheet.Modal">
-<!--        <item name="android:background">@android:color/transparent</item>-->
-        <item name="android:background">@drawable/shape_fragment_dialog_bottom_bg</item>
+    <style name="BottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <!--    <style name="BottomSheetStyleWrapper" parent="Widget.MaterialComponents.BottomSheet.Modal">-->
+        <item name="android:background">@android:color/transparent</item>
+        <!--        <item name="android:background">@null</item>-->
+        <!--        <item name="android:background">@drawable/shape_fragment_dialog_bottom_bg</item>-->
     </style>
 
 

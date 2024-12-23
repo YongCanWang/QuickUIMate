@@ -26,26 +26,8 @@ class MyBottomFragmentDialog :
         setStyle(STYLE_NO_FRAME, R.style.MyBottomSheetDialog)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-//        binding.root.setBackgroundResource(R.drawable.shape_fragment_dialog_bottom_bg)
-        return binding.root
-    }
-
     override fun onStarted() {
-        (binding.root.parent as ViewGroup).setBackgroundResource(R.drawable.shape_fragment_dialog_bottom_bg)
-//        dialog?.window?.setBackgroundDrawableResource(R.drawable.shape_fragment_dialog_bottom_bg)
-        (dialog?.window?.decorView as ViewGroup).let {
-            for (i in 0..<it.childCount) {
-                Log.e(TAG, "onStarted: " + it.getChildAt(i).id)
-            }
-        }
-//        dialog?.window?.findViewById<ViewGroup>(R.id.design_bottom_sheet)?.setBackgroundResource(R.drawable.shape_fragment_dialog_bottom_bg)
-//            ?.setBackgroundResource(R.drawable.shape_fragment_dialog_bottom_bg)
+
     }
 
     override fun onReStart() {
