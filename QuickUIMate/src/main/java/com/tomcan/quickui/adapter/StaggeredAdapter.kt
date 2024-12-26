@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -24,7 +24,7 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
     private val STANDARD_SCALE = 1.1 //当图片宽高比例大于STANDARD_SCALE时，采用3:4比例，小于时，则采用1:1比例
     private val SCALE = 4 * 1.0f / 3 //图片缩放比例
     private var mSpace: Int = 0
-    private var mLayoutParams: LinearLayout.LayoutParams? = null
+    private var mLayoutParams: ViewGroup.LayoutParams? = null
 
     private constructor()
 
@@ -64,10 +64,48 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
 //                (mRecyclerView().marginLeft + mRecyclerView().marginRight)
 //                - (mRecyclerView().paddingLeft + mRecyclerView().paddingRight)) / spanCount
 
-        mLayoutParams = mTargetView?.layoutParams as LinearLayout.LayoutParams
+        if (mTargetView?.layoutParams is LinearLayout.LayoutParams) {
+            mLayoutParams = mTargetView?.layoutParams as LinearLayout.LayoutParams
+        } else if (mTargetView?.layoutParams is RelativeLayout.LayoutParams) {
+            mLayoutParams = mTargetView?.layoutParams as RelativeLayout.LayoutParams
+        } else {
+            mLayoutParams = mTargetView?.layoutParams as ViewGroup.LayoutParams
+        }
         mLayoutParams?.width = itemWidth
         val scale = (mBitmap?.height?.toFloat()!!) / (mBitmap?.width?.toFloat()!!)
 //        val scale = mHeight!! / mWidth!!
+        if (scale > STANDARD_SCALE) {
+            //采用3:4显示
+            mLayoutParams?.height = (itemWidth * SCALE).toInt()
+        } else {
+            //采用1:1显示
+            mLayoutParams?.height = itemWidth
+        }
+        mTargetView?.layoutParams = mLayoutParams
+    }
+
+    private fun setScale() {
+        //计算图片宽高
+        var spanCount = getSpanCount(mRecyclerView())
+        //  通过RecyclerView宽度计算
+        val itemWidth =
+            (mRecyclerView().measuredWidth - mSpaceHorizontal() * (spanCount - 1) -
+                    (mRecyclerView().paddingLeft + mRecyclerView().paddingRight)) / spanCount
+        //  通过屏幕宽度计算
+//        val itemWidth = (getScreenWidth(mContext!!) - mSpaceHorizontal() * (spanCount - 1) -
+//                (mRecyclerView().marginLeft + mRecyclerView().marginRight)
+//                - (mRecyclerView().paddingLeft + mRecyclerView().paddingRight)) / spanCount
+
+        if (mTargetView?.layoutParams is LinearLayout.LayoutParams) {
+            mLayoutParams = mTargetView?.layoutParams as LinearLayout.LayoutParams
+        } else if (mTargetView?.layoutParams is RelativeLayout.LayoutParams) {
+            mLayoutParams = mTargetView?.layoutParams as RelativeLayout.LayoutParams
+        } else {
+            mLayoutParams = mTargetView?.layoutParams as ViewGroup.LayoutParams
+        }
+
+        mLayoutParams?.width = itemWidth
+        val scale = mHeight!! / mWidth!!
         if (scale > STANDARD_SCALE) {
             //采用3:4显示
             mLayoutParams?.height = (itemWidth * SCALE).toInt()
@@ -98,7 +136,7 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
         mTargetView = tragetView
         mWidth = width
         mHeight = height
-        setTargetViewStaggered()
+        setScale()
     }
 
     fun setSpace(space: Int) {

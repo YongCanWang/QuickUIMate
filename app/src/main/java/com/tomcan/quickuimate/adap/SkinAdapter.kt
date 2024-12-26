@@ -29,8 +29,8 @@ class SkinAdapter(recyclerView: RecyclerView, spaceHorizontal: Int, spaceVertica
                 mOptions.inSampleSize = 1
                 val bitmap = BitmapFactory.decodeStream(b, Rect(), mOptions)!!
                 v?.ivImag.let {
-                    setTargetView(c, it, bitmap)
-//                    setTargetView(c, it, bitmap.width.toFloat(), bitmap.height.toFloat())
+//                    setTargetView(c, it, bitmap)
+                    setTargetView(c, it, bitmap.width.toFloat(), bitmap.height.toFloat())
                     Glide.with(c)
                         .load(bitmap)
                         .placeholder(R.mipmap.ic_launcher)
