@@ -22,7 +22,7 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
     private var mWidth: Float? = null
     private var mHeight: Float? = null
     private val STANDARD_SCALE = 1.1 //当图片宽高比例大于STANDARD_SCALE时，采用3:4比例，小于时，则采用1:1比例
-    private val SCALE = 4 * 1.0f / 3 //图片缩放比例
+    private val SCALE = 4 * 1.0f / 3 //图片缩放比例:3:4显示
     private var mSpace: Int = 0
     private var mLayoutParams: ViewGroup.LayoutParams? = null
 
@@ -74,13 +74,18 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
         mLayoutParams?.width = itemWidth
         val scale = (mBitmap?.height?.toFloat()!!) / (mBitmap?.width?.toFloat()!!)
 //        val scale = mHeight!! / mWidth!!
-        if (scale > STANDARD_SCALE) {
-            //采用3:4显示
-            mLayoutParams?.height = (itemWidth * SCALE).toInt()
-        } else {
-            //采用1:1显示
-            mLayoutParams?.height = itemWidth
-        }
+
+//        if (scale > STANDARD_SCALE) {
+//            //采用3:4显示
+//            mLayoutParams?.height = (itemWidth * SCALE).toInt()
+//        } else {
+//            //采用1:1显示
+//            mLayoutParams?.height = itemWidth
+//        }
+
+        // 采用原始比例
+        mLayoutParams?.height = (itemWidth * scale).toInt()
+
         mTargetView?.layoutParams = mLayoutParams
     }
 
@@ -106,13 +111,17 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
 
         mLayoutParams?.width = itemWidth
         val scale = mHeight!! / mWidth!!
-        if (scale > STANDARD_SCALE) {
-            //采用3:4显示
-            mLayoutParams?.height = (itemWidth * SCALE).toInt()
-        } else {
-            //采用1:1显示
-            mLayoutParams?.height = itemWidth
-        }
+//        if (scale > STANDARD_SCALE) {
+//            //采用3:4显示
+//            mLayoutParams?.height = (itemWidth * SCALE).toInt()
+//        } else {
+//            //采用1:1显示
+//            mLayoutParams?.height = itemWidth
+//        }
+
+        // 采用原始比例
+        mLayoutParams?.height = (itemWidth * scale).toInt()
+
         mTargetView?.layoutParams = mLayoutParams
     }
 
