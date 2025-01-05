@@ -10,13 +10,15 @@ import com.tomcan.quickui.utils.Utils
 
 /**
  * @author Tom灿
- * @description:
+ * @description:  item交替摆放间距无问题，当一列出现连续排放item间距设置会出现错。
+ *                不能用position索引来判断itemView的位置。需要优化
  * @date: 2024/11/30 22:32
  */
 abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
     private lateinit var mRecyclerView: RecyclerView
     private var mSpaceHorizontal: Int = 0
     private var mSpaceVertical: Int = 0
+    private lateinit var mSpacesItemDecoration: SpacesItemDecoration
 
     constructor(recyclerView: RecyclerView) : this(recyclerView, 0, 0)
 
@@ -34,9 +36,10 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
 
     constructor(recyclerView: RecyclerView, spaceHorizontal: Int, spaceVertical: Int) : this() {
         this.mRecyclerView = recyclerView
-        mSpaceHorizontal =  Utils.dp2px(mRecyclerView.context, spaceHorizontal.toFloat())
-        mSpaceVertical =  Utils.dp2px(mRecyclerView.context, spaceVertical.toFloat())
-        mRecyclerView.addItemDecoration(SpacesItemDecoration(mSpaceHorizontal, mSpaceVertical))
+        mSpaceHorizontal = Utils.dp2px(mRecyclerView.context, spaceHorizontal.toFloat())
+        mSpaceVertical = Utils.dp2px(mRecyclerView.context, spaceVertical.toFloat())
+        mSpacesItemDecoration = SpacesItemDecoration(mSpaceHorizontal, mSpaceVertical)
+        mRecyclerView.addItemDecoration(mSpacesItemDecoration)
     }
 
     private class SpacesItemDecoration : RecyclerView.ItemDecoration {
@@ -50,6 +53,8 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
         private var mSpaceHorizontal: Int = 0
         private var mSpaceVertical: Int = 0
         private var mSpanCount = -1
+        private var mIsLeftRight = 0 // 0交替摆放，1继续摆放
+        private var mLastHeight = 0
 
         private constructor()
 
@@ -99,7 +104,6 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
 //        val tem = (ceil(totalCount.toDouble() / mColumns) * mColumns).toInt()
 //        if (position >= tem - mColumns) outRect.bottom = 0
 
-
             if (mSpanCount == -1) {
                 mSpanCount = getSpanCount(parent)
                 if (mSpanCount == -1) {
@@ -117,6 +121,7 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
             }
             /* 绘制水平边距 */
             val pInLine: Int = position % mSpanCount // 行内位置
+            Log.e("tomcan", "getItemOffsets: $position---$pInLine")
             if (pInLine == 0) {
                 outRect.left = 0
             } else {
@@ -124,7 +129,13 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
             }
             outRect.right =
                 ((mSpanCount - pInLine - 1) * 1f * mSpaceHorizontal / mSpanCount).toInt()
+            mLastHeight = view.height
         }
+
+        fun setLeftRight(leftRight: Int) {
+            mIsLeftRight = leftRight
+        }
+
 
 //        private fun getSpanCount(parent: RecyclerView): Int =
 //            when (parent.layoutManager) {
@@ -157,6 +168,10 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
                     -1
                 }
             }
+    }
+
+    fun setLeftRight(leftRight: Int) {
+        mSpacesItemDecoration.setLeftRight(leftRight)
     }
 
     fun mRecyclerView() = mRecyclerView

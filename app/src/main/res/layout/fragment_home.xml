@@ -74,6 +74,12 @@
             android:text="瀑布流2" />
 
         <Button
+            android:id="@+id/but_webp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="瀑布流webp" />
+
+        <Button
             android:id="@+id/but_bottom_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

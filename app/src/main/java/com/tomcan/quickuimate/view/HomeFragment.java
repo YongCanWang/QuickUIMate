@@ -63,6 +63,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.butWaterfall.setOnClickListener(view -> startActivity(new Intent(requireContext(), WaterfallActivity.class)));
         binding.butSkin.setOnClickListener(view -> startActivity(new Intent(requireContext(), SkinActivity.class)));
         binding.butGridList.setOnClickListener(view -> startActivity(new Intent(requireContext(), GridListActivity.class)));
+        binding.butWebp.setOnClickListener(view -> startActivity(new Intent(requireContext(), WebpActivity.class)));
         binding.butBottomDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

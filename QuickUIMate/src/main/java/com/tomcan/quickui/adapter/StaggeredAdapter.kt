@@ -25,6 +25,7 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
     private val SCALE = 4 * 1.0f / 3 //图片缩放比例:3:4显示
     private var mSpace: Int = 0
     private var mLayoutParams: ViewGroup.LayoutParams? = null
+    private var mLastHeight = 0
 
     private constructor()
 
@@ -84,10 +85,19 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
 //        }
 
         // 采用原始比例
-        mLayoutParams?.height = (itemWidth * scale).toInt()
+        val h = (itemWidth * scale).toInt()
+        mLayoutParams?.height = h
 
         mTargetView?.layoutParams = mLayoutParams
+
+        if (h >= mLastHeight) {
+            setLeftRight(0)
+        } else {
+            setLeftRight(1)
+        }
+        mLastHeight = h
     }
+
 
     private fun setScale() {
         //计算图片宽高
@@ -120,9 +130,17 @@ abstract class StaggeredAdapter<V, M> : GridAdapter<V, M> {
 //        }
 
         // 采用原始比例
-        mLayoutParams?.height = (itemWidth * scale).toInt()
+        val h = (itemWidth * scale).toInt()
+        mLayoutParams?.height = h
 
         mTargetView?.layoutParams = mLayoutParams
+
+        if (h >= mLastHeight) {
+            setLeftRight(0)
+        } else {
+            setLeftRight(1)
+        }
+        mLastHeight = h
     }
 
     fun setTargetView(): View? {
