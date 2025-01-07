@@ -81,6 +81,16 @@ abstract class QuickListViewAdapter<V, M> : BaseAdapter() {
         notifyDataSetChanged()
     }
 
+    fun removeData(data: M) {
+        mDatas.remove(data)
+        notifyDataSetChanged()
+    }
+
+    fun removeData(data: ArrayList<M>) {
+        mDatas.removeAll(data)
+        notifyDataSetChanged()
+    }
+
     fun updateData(data: M) {
         mDatas.clear()
         mDatas.add(data)
