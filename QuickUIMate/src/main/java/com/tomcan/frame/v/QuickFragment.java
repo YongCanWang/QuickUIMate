@@ -33,6 +33,14 @@ public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickV
     public VM viewModel;
     private ViewModelProvider mViewModelProvider;
 
+    private boolean mIsResume = false;
+
+    @NonNull
+    @Override
+    public ViewModelProvider.Factory getDefaultViewModelProviderFactory() {
+        return super.getDefaultViewModelProviderFactory();
+    }
+
     public QuickFragment() {
 
     }
@@ -71,15 +79,16 @@ public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickV
             addCallback();
             onStarted();
         }
+        mIsFirstVisit = false;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (!mIsFirstVisit) {
+        if (mIsResume) {
             onReStart();
         }
-        mIsFirstVisit = false;
+        mIsResume = true;
     }
 
     @Override
