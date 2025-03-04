@@ -10,7 +10,7 @@ import com.tomcan.quickui.utils.Utils
 
 /**
  * @author Tom灿
- * @description:  item交替摆放间距无问题，当一列出现连续排放item间距设置会出现错。
+ * @description:  item交替摆放间距无问题，当一列出现连续排放item间距设置会出现错乱。
  *                不能用position索引来判断itemView的位置。需要优化
  * @date: 2024/11/30 22:32
  */
@@ -121,7 +121,7 @@ abstract class GridAdapter<V, M>() : BaseAdapter<V, M>() {
             }
             /* 绘制水平边距 */
             val pInLine: Int = position % mSpanCount // 行内位置
-            Log.e("tomcan", "getItemOffsets: $position---$pInLine")
+//            Log.e("tomcan", "getItemOffsets: $position---$pInLine")
             if (pInLine == 0) {
                 outRect.left = 0
             } else {

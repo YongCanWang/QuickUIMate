@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.tomcan.frame.v.BaseFragment
+import com.tomcan.frame.v.QuickViewPageFragment
 
 /**
  * @author Tom灿
@@ -12,12 +12,12 @@ import com.tomcan.frame.v.BaseFragment
  * @date :2024/5/3 18:25
  */
 class ViewPagerFragmentAdapter : FragmentStateAdapter {
-    private var mFragments: List<BaseFragment<*, *>>
+    private var mFragments: List<QuickViewPageFragment<*, *>>
 
     constructor(
         fragmentManager: FragmentManager,
         lifecycle: Lifecycle,
-        fragments: List<BaseFragment<*, *>>
+        fragments: List<QuickViewPageFragment<*, *>>
     ) : super(fragmentManager, lifecycle) {
         this.mFragments = fragments
     }
