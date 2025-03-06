@@ -21,13 +21,14 @@ import java.util.List;
  * @date :2021/4/16 10:34
  */
 public abstract class QuickAdapter<V, M> extends
-        RecyclerView.Adapter<QuickAdapter.QuickViewHolder> implements View.OnClickListener {
+        RecyclerView.Adapter<QuickAdapter.QuickViewHolder> implements View.OnClickListener, View.OnLongClickListener {
     private final ArrayList<M> datas = new ArrayList<>();
     private final SparseArrayCompat<View> headViews = new SparseArrayCompat<>();
     private final SparseArrayCompat<View> footViews = new SparseArrayCompat<>();
     private int VIEW_HEAD_INDEX = 100000;
     private int VIEW_FOOT_INDEX = 200000;
     private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
+    private OnRecyclerViewItemLongClickListener mOnRecyclerViewItemLongClickListener;
     private boolean isShowLoadingView = false;
 
     @NonNull
@@ -56,6 +57,7 @@ public abstract class QuickAdapter<V, M> extends
         } else {
             holder.itemView.setTag(holder);
             holder.itemView.setOnClickListener(this);
+            holder.itemView.setOnLongClickListener(this);
             bindData((V) holder.v, datas.get(position - headViews.size()));
         }
     }
@@ -85,6 +87,15 @@ public abstract class QuickAdapter<V, M> extends
         QuickViewHolder holder = (QuickViewHolder) v.getTag();
         if (null != onRecyclerViewItemClickListener)
             onRecyclerViewItemClickListener.itemView(v, holder.getLayoutPosition() - headViews.size());
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        QuickViewHolder holder = (QuickViewHolder) view.getTag();
+        if (null != mOnRecyclerViewItemLongClickListener) {
+            mOnRecyclerViewItemLongClickListener.itemView(view, holder.getLayoutPosition() - headViews.size());
+        }
+        return false;
     }
 
     public static class QuickViewHolder extends RecyclerView.ViewHolder {
@@ -231,6 +242,10 @@ public abstract class QuickAdapter<V, M> extends
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
         this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener) {
+        this.mOnRecyclerViewItemLongClickListener = onRecyclerViewItemLongClickListener;
     }
 
     public interface OnRecyclerViewItemClickListener {
