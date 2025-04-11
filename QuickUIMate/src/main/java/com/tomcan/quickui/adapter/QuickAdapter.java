@@ -103,7 +103,7 @@ public abstract class QuickAdapter<V, M> extends
 
         public QuickViewHolder(ViewDataBinding v) {
             this(v.getRoot());
-            this.v = (ViewDataBinding) v;
+            this.v = v;
         }
 
         public QuickViewHolder(@NonNull View itemView) {

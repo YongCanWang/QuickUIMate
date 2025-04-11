@@ -22,7 +22,10 @@ import java.lang.reflect.Type;
 
 /**
  * @author TomCan
- * @description:
+ * @description: 由于ViewPage中的Fragment在切换之时，会重复的销毁和创建，重走生命周期方法onCreateView、onDestroy
+ *               故在onDestroy 方法中不再执行binding的解绑以及ViewModel的释放等代码
+ *               以此来保证View的复用，以及避免binding出现NullPointerException错误的问题
+ *               并且提供了destroy方法，在需要的时候调用，释放相关资源对象
  * @date :2019/3/20 9:17
  */
 @SuppressLint("LogNotTimber")
@@ -136,6 +139,10 @@ public abstract class QuickViewPageFragment<V extends ViewDataBinding, VM extend
         return t;
     }
 
+    /**
+     * 解绑 binding
+     * 释放 ViewModel
+     */
     public void destroy() {
         mIsFirstVisit = true;
         if (binding != null) {
