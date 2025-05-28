@@ -3,7 +3,6 @@ package com.tomcan.frame.v
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.tomcan.frame.vm.QuickViewModel
@@ -29,10 +28,12 @@ abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
         mGenericSuperclass = javaClass.genericSuperclass as ParameterizedType
         checkNotNull(mGenericSuperclass)
         val actualTypeArguments: Array<out Type>? = mGenericSuperclass?.actualTypeArguments
-        val vmClass = actualTypeArguments?.get(1) as Class<VM>
-        mViewModelProvider = ViewModelProvider(this)
-        viewModel = mViewModelProvider?.get<VM>(vmClass)!!
-        viewModel.let { lifecycle.addObserver(it) }
+        actualTypeArguments?.takeIf { it.size > 1 }?.let {
+            val vmClass = it[1] as Class<VM>
+            mViewModelProvider = ViewModelProvider(this)
+            viewModel = mViewModelProvider?.get<VM>(vmClass)!!
+            viewModel.let { lifecycle.addObserver(it) }
+        }
         addCallback()
         binding = getLayout()
         setContentView(binding.root)
@@ -93,7 +94,9 @@ abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
     override fun onDestroy() {
         mIsFirstVisit = true
         binding.unbind()
-        lifecycle.removeObserver(viewModel)
+        if (this::viewModel.isInitialized) {
+            lifecycle.removeObserver(viewModel)
+        }
         mViewModelProvider = null
         super.onDestroy()
     }
