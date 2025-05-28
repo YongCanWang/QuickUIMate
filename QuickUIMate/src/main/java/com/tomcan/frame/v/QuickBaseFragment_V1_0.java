@@ -32,6 +32,7 @@ import java.util.List;
  * @description:
  * @date :2019/3/20 9:17
  */
+@Deprecated
 @SuppressLint("LogNotTimber")
 public abstract class QuickBaseFragment_V1_0<V extends ViewDataBinding, VM extends QuickViewModel> extends Fragment {
     public String TAG = this.getClass().getSimpleName();

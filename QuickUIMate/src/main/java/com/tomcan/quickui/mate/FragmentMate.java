@@ -16,6 +16,7 @@ import com.tomcan.frame.v.QuickBaseFragment_V1_0;
  * @description:
  * @date :2019/4/28 15:36
  */
+@Deprecated
 public class FragmentMate {
 
     private static FragmentMate fragmentMate;

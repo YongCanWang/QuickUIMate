@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -39,7 +38,7 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
         savedInstanceState: Bundle?
     ): View? {
         if (!this::binding.isInitialized) {
-            binding = DataBindingUtil.inflate(inflater, layout(), container, false)
+            binding = getLayout()
         }
         return binding.root
     }
@@ -85,7 +84,7 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
             })
     }
 
-    abstract fun layout(): Int
+    abstract fun getLayout(): V
 
     /**
      * 在整个Activity生命周期中只调用一次

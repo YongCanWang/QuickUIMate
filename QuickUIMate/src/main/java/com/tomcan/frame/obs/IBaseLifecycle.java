@@ -10,7 +10,7 @@ import androidx.lifecycle.OnLifecycleEvent;
  * @description:
  * @date :2020/8/7 8:41
  */
-public interface IBaselLifecycle extends LifecycleObserver {
+public interface IBaseLifecycle extends LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     void onAny(LifecycleOwner owner, Lifecycle.Event event);
 

@@ -6,8 +6,7 @@ import android.view.View;
 import androidx.databinding.Observable;
 import androidx.lifecycle.Observer;
 
-import com.tomcan.frame.v.BaseFragment;
-import com.tomcan.quickuimate.R;
+import com.tomcan.frame.v.QuickFragment;
 import com.tomcan.quickuimate.databinding.FragmentHomeBinding;
 import com.tomcan.quickuimate.viewmodel.HomeViewModel;
 
@@ -16,11 +15,11 @@ import com.tomcan.quickuimate.viewmodel.HomeViewModel;
  * @description: 框架示例-View
  * @date :2024/3/15 17:50
  */
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
+public class HomeFragment extends QuickFragment<FragmentHomeBinding, HomeViewModel> {
 
     @Override
-    public int layout() {
-        return R.layout.fragment_home;
+    public FragmentHomeBinding getLayout() {
+        return FragmentHomeBinding.inflate(getLayoutInflater());
     }
 
     @Override

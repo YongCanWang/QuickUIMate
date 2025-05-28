@@ -17,6 +17,7 @@ import com.tomcan.quickui.R;
  * @description:
  * @date :2019/7/16 11:59
  */
+@Deprecated
 public class QuickListView extends ListView implements AbsListView.OnScrollListener {
 
     private       String                 TAG      = "SlideListView";

@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatEditText;
  * @description:
  * @date :2020/4/15 9:05
  */
+@Deprecated
 public class QuickClickEditText extends AppCompatEditText {
     private final Context                  context;
     private       Drawable                 drawablesLeft;

@@ -16,6 +16,7 @@ import android.widget.Scroller;
  * @description: ListView父容器。 有且仅有ListView
  * @date :2020/4/21 10:11
  */
+@Deprecated
 public class SlideListView extends ViewGroup {
 
     private       String              TAG              = this.getClass().getSimpleName();

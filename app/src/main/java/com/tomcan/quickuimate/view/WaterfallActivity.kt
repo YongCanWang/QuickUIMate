@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tomcan.frame.v.BaseActivity
-import com.tomcan.quickuimate.R
 import com.tomcan.quickuimate.adap.WaterfallAdapter
 import com.tomcan.quickuimate.databinding.ActivityWaterfallBinding
 import com.tomcan.quickuimate.viewmodel.WaterfallViewModel
@@ -16,7 +15,8 @@ import com.tomcan.quickuimate.viewmodel.WaterfallViewModel
  */
 class WaterfallActivity : BaseActivity<ActivityWaterfallBinding, WaterfallViewModel>() {
 
-    override fun layout() = R.layout.activity_waterfall
+    override fun getLayout(): ActivityWaterfallBinding =
+        ActivityWaterfallBinding.inflate(layoutInflater)
 
     override fun onStarted() {
         addGridLayoutManager(binding.rvList)

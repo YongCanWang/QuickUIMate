@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.tomcan.frame.m.QuickModel;
-import com.tomcan.frame.obs.IBaselLifecycle;
+import com.tomcan.frame.obs.IBaseLifecycle;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
  * @description:
  * @date :2020/8/5 15:34
  */
-public abstract class QuickViewModel<M extends QuickModel> extends AndroidViewModel implements IBaselLifecycle {
+public abstract class QuickViewModel<M extends QuickModel> extends AndroidViewModel implements IBaseLifecycle {
     public String TAG = this.getClass().getSimpleName();
     public final Application application;
     public M model;

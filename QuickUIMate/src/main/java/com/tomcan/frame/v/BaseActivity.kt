@@ -1,7 +1,5 @@
 package com.tomcan.frame.v
 
-import android.content.Context
-import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import com.tomcan.frame.vm.BaseViewModel
 

@@ -67,7 +67,7 @@ public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickV
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (binding == null) {
-            binding = DataBindingUtil.inflate(inflater, layout(), container, false);
+            binding = getLayout();
         }
         return binding.getRoot();
     }
@@ -111,7 +111,7 @@ public abstract class QuickFragment<V extends ViewDataBinding, VM extends QuickV
                 });
     }
 
-    public abstract int layout();
+    public abstract V getLayout();
 
     /**
      * 在整个Activity生命周期中只调用一次

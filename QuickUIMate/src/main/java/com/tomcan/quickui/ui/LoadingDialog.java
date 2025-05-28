@@ -23,6 +23,7 @@ import com.tomcan.quickui.R;
  * @description:
  * @date :2019/3/19 16:16
  */
+@Deprecated
 public class LoadingDialog extends AlertDialog {
     private Context context;
     private RotateAnimation mAnim;

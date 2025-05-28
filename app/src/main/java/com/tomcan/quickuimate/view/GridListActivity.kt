@@ -3,9 +3,7 @@ package com.tomcan.quickuimate.view
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tomcan.frame.v.BaseActivity
-import com.tomcan.quickuimate.R
 import com.tomcan.quickuimate.adap.GridListAdapter
 import com.tomcan.quickuimate.databinding.ActivityGridListBinding
 import com.tomcan.quickuimate.viewmodel.WaterfallViewModel
@@ -17,7 +15,7 @@ import com.tomcan.quickuimate.viewmodel.WaterfallViewModel
  */
 class GridListActivity : BaseActivity<ActivityGridListBinding, WaterfallViewModel>() {
 
-    override fun layout() = R.layout.activity_grid_list
+    override fun getLayout() = ActivityGridListBinding.inflate(layoutInflater)
 
     override fun onStarted() {
         addGridLayoutManager(binding.rvList)

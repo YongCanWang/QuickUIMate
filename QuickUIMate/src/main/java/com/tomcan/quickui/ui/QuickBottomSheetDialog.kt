@@ -2,10 +2,8 @@ package com.tomcan.quickui.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -33,10 +31,7 @@ abstract class QuickBottomSheetDialog<V : ViewDataBinding> :
 
     private fun initView() {
         if (!this::binding.isInitialized) {
-            val inflate = LayoutInflater.from(mContext).inflate(layout(), null)
-            DataBindingUtil.bind<V>(inflate)?.let {
-                binding = it
-            }
+            binding = getLayout()
             setContentView(binding.root)
         }
 
@@ -45,7 +40,7 @@ abstract class QuickBottomSheetDialog<V : ViewDataBinding> :
         }
     }
 
-    abstract fun layout(): Int
+    abstract fun getLayout(): V
 
     open fun cancelDialog() {
         (mContext as AppCompatActivity)?.takeIf { !it.isFinishing && !it.isDestroyed }?.let {

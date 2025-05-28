@@ -16,7 +16,7 @@ import com.tomcan.quickuimate.viewmodel.WaterfallViewModel
  */
 class SkinActivity : BaseActivity<ActivityWaterfallBinding, WaterfallViewModel>() {
 
-    override fun layout() = R.layout.activity_waterfall
+    override fun getLayout() = ActivityWaterfallBinding.inflate(layoutInflater)
 
     override fun onStarted() {
         addGridLayoutManager(binding.rvList)

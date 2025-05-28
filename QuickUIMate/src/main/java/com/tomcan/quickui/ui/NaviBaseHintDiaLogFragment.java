@@ -14,6 +14,7 @@ import com.tomcan.frame.v.QuickBaseFragment_V1_0;
  * @description:
  * @date :2021/9/17 10:38
  */
+@Deprecated
 public class NaviBaseHintDiaLogFragment extends DialogFragment implements DialogInterface.OnKeyListener {
     private final  String            TAG         = NaviBaseHintDiaLogFragment.this.getClass().getSimpleName();
     private        Context           context;

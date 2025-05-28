@@ -2,7 +2,6 @@ package com.tomcan.quickuimate.view
 
 import android.content.Context
 import com.tomcan.quickui.ui.QuickBottomSheetDialog
-import com.tomcan.quickuimate.R
 import com.tomcan.quickuimate.databinding.DialogMyBottomBinding
 
 /**
@@ -13,5 +12,5 @@ import com.tomcan.quickuimate.databinding.DialogMyBottomBinding
 class MyBottomDialog(context: Context) :
     QuickBottomSheetDialog<DialogMyBottomBinding>(context) {
 
-    override fun layout() = R.layout.dialog_my_bottom
+    override fun getLayout() = DialogMyBottomBinding.inflate(layoutInflater)
 }

@@ -34,7 +34,8 @@ abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
         viewModel = mViewModelProvider?.get<VM>(vmClass)!!
         viewModel.let { lifecycle.addObserver(it) }
         addCallback()
-        binding = DataBindingUtil.setContentView<V>(this, layout())
+        binding = getLayout()
+        setContentView(binding.root)
     }
 
     override fun onStart() {
@@ -63,7 +64,7 @@ abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
             })
     }
 
-    abstract fun layout(): Int
+    abstract fun getLayout(): V
 
     /**
      * 在整个Activity生命周期中只调用一次

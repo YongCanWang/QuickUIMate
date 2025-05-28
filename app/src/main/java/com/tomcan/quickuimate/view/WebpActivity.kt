@@ -16,7 +16,7 @@ import com.tomcan.quickuimate.viewmodel.WebpViewModel
  */
 class WebpActivity : BaseActivity<ActivityWebpBinding, WebpViewModel>() {
 
-    override fun layout() = R.layout.activity_webp
+    override fun getLayout() = ActivityWebpBinding.inflate(layoutInflater)
 
     override fun onStarted() {
         addStaggeredGridLayoutManager(binding.rvList)

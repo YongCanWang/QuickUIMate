@@ -7,6 +7,7 @@ import com.tomcan.frame.v.QuickBaseFragment_V1_0;
  * @description:
  * @date:2022/10/10 9:20
  */
+@Deprecated
 public interface OnStackObservable {
     void onChanged();
 

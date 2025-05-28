@@ -12,6 +12,7 @@ import android.widget.TextView;
  * @description:
  * @date :2020/11/20 10:59
  */
+@Deprecated
 public class QuickCommentView extends ViewGroup {
 
 

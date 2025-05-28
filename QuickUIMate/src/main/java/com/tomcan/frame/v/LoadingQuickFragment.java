@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * @description:
  * @date :2021/8/23 14:03
  */
+@Deprecated
 public abstract class LoadingQuickFragment<V extends ViewDataBinding, VM extends QuickViewModel> extends QuickBaseFragment_V1_0<V, VM>
         implements HintDalogFragment.OnDalogFragtListener {
 

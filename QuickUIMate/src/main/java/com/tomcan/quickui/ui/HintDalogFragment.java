@@ -12,6 +12,7 @@ import com.tomcan.frame.v.QuickBaseFragment_V1_0;
  * @description: 加载提示Fragt
  * @date :2021/9/9 11:21
  */
+@Deprecated
 public class HintDalogFragment extends NaviBaseHintDiaLogFragment {
 
 

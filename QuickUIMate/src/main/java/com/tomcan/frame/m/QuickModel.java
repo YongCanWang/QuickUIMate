@@ -6,14 +6,14 @@ import android.util.Log;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.tomcan.frame.obs.IBaselLifecycle;
+import com.tomcan.frame.obs.IBaseLifecycle;
 
 /**
  * @author Tom灿
  * @description:
  * @date :2024/3/18 10:43
  */
-public abstract class QuickModel implements IBaselLifecycle {
+public abstract class QuickModel implements IBaseLifecycle {
     public String TAG = this.getClass().getSimpleName();
 
     public Application application;

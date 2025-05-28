@@ -5,6 +5,7 @@ package com.tomcan.quickui.adapter;
  * @description:
  * @date :2024/1/21 12:25
  */
+@Deprecated
 public abstract class Data {
     public String indexID;
 

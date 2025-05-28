@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @description:
  * @date:2022/8/27 18:33
  */
+@Deprecated
 public class QuickRecyclerView extends RecyclerView {
     public QuickRecyclerView(@NonNull Context context) {
         super(context);

@@ -19,12 +19,12 @@ import com.tomcan.quickuimate.viewmodel.HomeViewModel
 class MyBottomFragmentDialog :
     QuickBottomSheetDialogFragment<FragmentDialogMyBottomBinding, HomeViewModel>() {
 
-    override fun layout() = R.layout.fragment_dialog_my_bottom
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.MyBottomSheetDialog)
     }
+
+    override fun getLayout() = FragmentDialogMyBottomBinding.inflate(layoutInflater)
 
     override fun onStarted() {
 
