@@ -4,18 +4,20 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.viewbinding.ViewBinding
 import com.tomcan.frame.obs.IBaseLifecycle
+import com.tomcan.quickui.utils.ActivityUtils.Companion.getActivity
+
 
 /**
  * @author Tom灿
  * @description: BaseDialog 观察Activity的生命周期
  * @date :2024/6/26 21:50
  */
-abstract class BaseDialog<V : ViewDataBinding> : AlertDialog {
-    var binding: V? = null
+abstract class BaseDialog<V : ViewBinding> : AlertDialog {
+    lateinit var binding: V
     private val mIBaselLifecycle = object : IBaseLifecycle {
         override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
         }
@@ -41,13 +43,13 @@ abstract class BaseDialog<V : ViewDataBinding> : AlertDialog {
     }
 
     constructor(context: Context) : super(context) {
-        (context as AppCompatActivity).let { activity ->
-            setOnDismissListener {
-                activity.lifecycle.removeObserver(mIBaselLifecycle)
-                binding?.unbind()
-                binding = null
+        getActivity(context)?.let {
+            (it as AppCompatActivity).let { activity ->
+                setOnDismissListener {
+                    activity.lifecycle.removeObserver(mIBaselLifecycle)
+                }
+                activity.lifecycle.addObserver(mIBaselLifecycle)
             }
-            activity.lifecycle.addObserver(mIBaselLifecycle)
         }
     }
 
@@ -60,7 +62,7 @@ abstract class BaseDialog<V : ViewDataBinding> : AlertDialog {
     }
 
     fun showDialog() {
-        context?.let {
+        getActivity(context)?.let {
             (it as AppCompatActivity).let { activity ->
                 if (!isShowing && !activity.isFinishing && !activity.isDestroyed) {
                     show()
@@ -71,8 +73,6 @@ abstract class BaseDialog<V : ViewDataBinding> : AlertDialog {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        binding?.unbind()
-        binding = null
     }
 
     abstract fun getLayout(): V

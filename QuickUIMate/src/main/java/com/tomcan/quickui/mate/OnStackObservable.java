@@ -1,6 +1,6 @@
 package com.tomcan.quickui.mate;
 
-import com.tomcan.frame.v.QuickBaseFragment_V1_0;
+import androidx.fragment.app.Fragment;
 
 /**
  * @author TomCan
@@ -11,7 +11,7 @@ import com.tomcan.frame.v.QuickBaseFragment_V1_0;
 public interface OnStackObservable {
     void onChanged();
 
-    void onStacksInserted(QuickBaseFragment_V1_0 fragment);
+    void onStacksInserted(Fragment fragment);
 
     void onStacksRemoved();
 }

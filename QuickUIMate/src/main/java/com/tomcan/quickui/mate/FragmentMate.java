@@ -8,6 +8,8 @@ import androidx.databinding.ObservableList;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.tomcan.frame.v.BaseFragment;
 import com.tomcan.quickui.R;
 import com.tomcan.frame.v.QuickBaseFragment_V1_0;
 
@@ -24,7 +26,7 @@ public class FragmentMate {
     private FragmentManager fragmentManager;
     private int container;
     private FrameLayout containerLayout;
-    private static final ObservableArrayList<QuickBaseFragment_V1_0> stacks = new ObservableArrayList<>();
+    private static final ObservableArrayList<Fragment> stacks = new ObservableArrayList<>();
 
     private FragmentMate() {
     }
@@ -49,7 +51,7 @@ public class FragmentMate {
         fragmentManager = activity.getSupportFragmentManager();
     }
 
-    public void add(QuickBaseFragment_V1_0 frameLayout) {
+    public void add(Fragment frameLayout) {
         fragmentManager.beginTransaction()
                 .add(container, frameLayout)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -58,7 +60,7 @@ public class FragmentMate {
         stacks.add(frameLayout);
     }
 
-    public void add(QuickBaseFragment_V1_0 fragment, int flContainer) {
+    public void add(Fragment fragment, int flContainer) {
         fragmentManager.beginTransaction()
                 .add(flContainer, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -67,7 +69,7 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
-    public void add(QuickBaseFragment_V1_0 fragment, FrameLayout flContainer) {
+    public void add(Fragment fragment, FrameLayout flContainer) {
         fragmentManager.beginTransaction()
                 .add(flContainer.getId(), fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -76,16 +78,8 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
-    public void add(Fragment fragment) {
-        fragmentManager.beginTransaction()
-                .add(container, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
-                .show(fragment).commit();
-    }
 
-
-    public void show(QuickBaseFragment_V1_0 fragment, int containerViewId) {
+    public void show(Fragment fragment, int containerViewId) {
         if (fragment.isAdded()) {
             fragmentManager.beginTransaction().addToBackStack(null).show(fragment).commit();
         } else {
@@ -94,20 +88,20 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
-    public void show(QuickBaseFragment_V1_0 fragment) {
+    public void show(Fragment fragment) {
         if (fragment.isAdded()) {
             fragmentManager.beginTransaction().show(fragment).commit();
         }
     }
 
-    public void hide(QuickBaseFragment_V1_0 fragment) {
+    public void hide(Fragment fragment) {
         if (fragment.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment).commit();
         }
     }
 
 
-    public void replaceStack(QuickBaseFragment_V1_0 fragment) {
+    public void replaceStack(Fragment fragment) {
         fragmentManager.beginTransaction()
                 .replace(container, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -116,7 +110,7 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
-    public void replaceStack(QuickBaseFragment_V1_0 fragment, int container) {
+    public void replaceStack(Fragment fragment, int container) {
         fragmentManager.beginTransaction()
                 .replace(container, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -125,7 +119,7 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
-    public void replaceStack(QuickBaseFragment_V1_0 fragment, ViewGroup container) {
+    public void replaceStack(Fragment fragment, ViewGroup container) {
         fragmentManager.beginTransaction()
                 .replace(container.getId(), fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -134,7 +128,7 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
-    public void replaceStack(QuickBaseFragment_V1_0 fragment, String tag) {
+    public void replaceStack(Fragment fragment, String tag) {
         fragmentManager.beginTransaction()
                 .replace(container, fragment, tag)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -143,7 +137,7 @@ public class FragmentMate {
         stacks.add(fragment);
     }
 
-    public void replaceAnimatorStack(QuickBaseFragment_V1_0 fragment) {
+    public void replaceAnimatorStack(Fragment fragment) {
         fragmentManager.beginTransaction()
                 .setCustomAnimations(R.animator.fragment_slide_right_enter,
                         R.animator.fragment_slide_left_exit,
@@ -194,7 +188,6 @@ public class FragmentMate {
             fragmentManager.beginTransaction().remove(stacks.get(stacks.size() - 1)).commit();
             stacks.remove(stacks.size() - 1);
         }
-
     }
 
     public void popRemoveAll() {
@@ -207,7 +200,6 @@ public class FragmentMate {
         }
     }
 
-
     public void popBottomStacks() {
         if (stacks.size() > 0) {
             for (int i = stacks.size() - 2; i >= 0; i--)
@@ -215,7 +207,6 @@ public class FragmentMate {
 
             for (int i = stacks.size() - 2; i >= 0; i--)
                 stacks.remove(i);
-
         }
     }
 
@@ -263,10 +254,7 @@ public class FragmentMate {
         });
     }
 
-
     public FrameLayout getContainerLayout() {
         return containerLayout;
     }
-
-
 }
