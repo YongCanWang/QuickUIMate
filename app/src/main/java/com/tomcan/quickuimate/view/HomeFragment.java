@@ -1,7 +1,6 @@
 package com.tomcan.quickuimate.view;
 
 import android.content.Intent;
-import android.view.View;
 
 import androidx.databinding.Observable;
 import androidx.lifecycle.Observer;
@@ -63,16 +62,13 @@ public class HomeFragment extends QuickFragment<FragmentHomeBinding, HomeViewMod
         binding.butSkin.setOnClickListener(view -> startActivity(new Intent(requireContext(), SkinActivity.class)));
         binding.butGridList.setOnClickListener(view -> startActivity(new Intent(requireContext(), GridListActivity.class)));
         binding.butWebp.setOnClickListener(view -> startActivity(new Intent(requireContext(), WebpActivity.class)));
-        binding.butBottomDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MyBottomFragmentDialog myBottomFragmentDialog = new MyBottomFragmentDialog();
-                myBottomFragmentDialog.show(requireActivity().getSupportFragmentManager(),
-                        myBottomFragmentDialog.getTag());
-
+        binding.butDialog.setOnClickListener(view -> new MyDialog(requireContext()).show());
+        binding.butBottomDialog.setOnClickListener(view -> {
+            MyBottomFragmentDialog myBottomFragmentDialog = new MyBottomFragmentDialog();
+            myBottomFragmentDialog.show(requireActivity().getSupportFragmentManager(),
+                    myBottomFragmentDialog.getTag());
 //                MyBottomDialog myBottomDialog = new MyBottomDialog(requireContext());
 //                myBottomDialog.show();
-            }
         });
     }
 

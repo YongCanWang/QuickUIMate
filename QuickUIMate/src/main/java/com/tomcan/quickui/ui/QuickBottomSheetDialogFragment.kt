@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -110,6 +111,25 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
         return t
     }
 
+    override fun dismiss() {
+        requireActivity()?.takeIf { !it.isFinishing && !it.isDestroyed }?.let {
+            takeIf { isAdded }?.let {
+                dialog?.takeIf {
+                    it.isShowing
+                }?.let {
+                    super.dismiss()
+                }
+            }
+        }
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+//        requireActivity()?.takeIf { !it.isFinishing && !it.isDestroyed }?.let {
+//            takeIf { !isAdded }?.let { super.show(manager, tag) }
+//        }
+        super.show(manager, tag)
+    }
+
     override fun onDestroy() {
         mIsFirstVisit = true
         binding.unbind()
@@ -119,22 +139,4 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
         mViewModelProvider = null
         super.onDestroy()
     }
-
-    fun dismissDialog() {
-        requireActivity()?.takeIf { !it.isFinishing && !it.isDestroyed }?.let {
-            takeIf { isAdded }?.let {
-                dialog?.takeIf {
-                    it.isShowing
-                }?.let {
-                    dismiss()
-                }
-            }
-        }
-    }
-
-//    fun showDialog(manager: FragmentManager) {
-//        requireActivity()?.takeIf { !it.isFinishing && !it.isDestroyed }?.let {
-//            takeIf { !isAdded }?.let { show(manager, tag) }
-//        }
-//    }
 }
