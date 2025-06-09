@@ -20,7 +20,7 @@ import com.tomcan.quickui.utils.ActivityUtils.Companion.getActivity
  */
 abstract class BaseDialog<V : ViewBinding> : Dialog {
     lateinit var binding: V
-    private val mIBaselLifecycle = object : IBaseLifecycle {
+    private val mIBaseLifecycle = object : IBaseLifecycle {
         override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
         }
 
@@ -48,9 +48,9 @@ abstract class BaseDialog<V : ViewBinding> : Dialog {
         getActivity(context)?.let {
             (it as AppCompatActivity).let { activity ->
                 setOnDismissListener {
-                    activity.lifecycle.removeObserver(mIBaselLifecycle)
+                    activity.lifecycle.removeObserver(mIBaseLifecycle)
                 }
-                activity.lifecycle.addObserver(mIBaselLifecycle)
+                activity.lifecycle.addObserver(mIBaseLifecycle)
             }
         }
     }

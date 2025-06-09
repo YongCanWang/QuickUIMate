@@ -16,7 +16,7 @@ import com.tomcan.frame.obs.IBaseLifecycle
 abstract class BasePopupWindow<V : ViewBinding> : PopupWindow {
     private var mContext: Context
     lateinit var binding: V
-    private var mIBaselLifecycle = object : IBaseLifecycle {
+    private var mIBaseLifecycle = object : IBaseLifecycle {
         override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
         }
 
@@ -43,8 +43,8 @@ abstract class BasePopupWindow<V : ViewBinding> : PopupWindow {
     constructor(context: Context) : super(context) {
         mContext = context
         (context as AppCompatActivity).let { activity ->
-            setOnDismissListener { activity.lifecycle.removeObserver(mIBaselLifecycle) }
-            activity.lifecycle.addObserver(mIBaselLifecycle)
+            setOnDismissListener { activity.lifecycle.removeObserver(mIBaseLifecycle) }
+            activity.lifecycle.addObserver(mIBaseLifecycle)
         }
         binding = getLayout()
         contentView = binding?.root
