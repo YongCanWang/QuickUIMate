@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.tomcan.frame.obs.IBaseLifecycle
 import com.tomcan.frame.vm.QuickViewModel
+import com.tomcan.quickui.utils.ActivityUtils
+import com.tomcan.quickui.utils.ActivityUtils.Companion
 import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -27,6 +33,29 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
     lateinit var binding: V
     open val viewModel: VM? by lazy { getLazyViewModel() } // TODO 可为null 待优化
     private var mViewModelProvider: ViewModelProvider? = null
+    private val mIBaseLifecycle = object : IBaseLifecycle {
+        override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
+        }
+
+        override fun onCreate() {
+        }
+
+        override fun onDestroy() {
+            dismiss()
+        }
+
+        override fun onStart() {
+        }
+
+        override fun onStop() {
+        }
+
+        override fun onResume() {
+        }
+
+        override fun onPause() {
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +76,11 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
     override fun onStart() {
         super.onStart()
         if (mIsFirstVisit) {
+            ActivityUtils.getActivity(context)?.let {
+                (it as AppCompatActivity).let { activity ->
+                    activity.lifecycle.addObserver(mIBaseLifecycle)
+                }
+            }
             addCallback()
             onStarted()
         }
@@ -137,6 +171,11 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
             lifecycle.removeObserver(it)
         }
         mViewModelProvider = null
+        ActivityUtils.getActivity(context)?.let {
+            (it as AppCompatActivity).let { activity ->
+                activity.lifecycle.removeObserver(mIBaseLifecycle)
+            }
+        }
         super.onDestroy()
     }
 }
