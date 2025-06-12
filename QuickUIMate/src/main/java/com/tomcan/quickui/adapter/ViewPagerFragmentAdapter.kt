@@ -1,4 +1,4 @@
-package com.tomcan.quickui.ui
+package com.tomcan.quickui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

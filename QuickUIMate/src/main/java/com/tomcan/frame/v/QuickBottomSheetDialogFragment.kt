@@ -1,4 +1,4 @@
-package com.tomcan.quickui.ui
+package com.tomcan.frame.v
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -156,7 +156,7 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
 //        }
 //    }
 
-    fun show(manager: FragmentManager) {
+    open fun show(manager: FragmentManager) {
         super.show(manager, javaClass.simpleName)
     }
 

@@ -1,12 +1,7 @@
 package com.tomcan.quickuimate.view
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import com.tomcan.quickui.ui.QuickBottomSheetDialogFragment
+import com.tomcan.frame.v.QuickBottomSheetDialogFragment
 import com.tomcan.quickuimate.R
 import com.tomcan.quickuimate.databinding.FragmentDialogMyBottomBinding
 import com.tomcan.quickuimate.viewmodel.HomeViewModel

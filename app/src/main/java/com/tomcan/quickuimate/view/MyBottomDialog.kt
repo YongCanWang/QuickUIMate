@@ -1,7 +1,7 @@
 package com.tomcan.quickuimate.view
 
 import android.content.Context
-import com.tomcan.quickui.ui.QuickBottomSheetDialog
+import com.tomcan.frame.v.QuickBottomSheetDialog
 import com.tomcan.quickuimate.databinding.DialogMyBottomBinding
 
 /**
