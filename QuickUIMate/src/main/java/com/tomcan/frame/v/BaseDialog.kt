@@ -64,10 +64,16 @@ abstract class BaseDialog<V : ViewBinding> : Dialog {
     override fun show() {
         getActivity(context)?.let {
             (it as AppCompatActivity).let { activity ->
-                if (!isShowing && !activity.isFinishing && !activity.isDestroyed) {
+                if (!isShowing && !activity.isDestroyed && !activity.isFinishing) {
                     super.show()
                 }
             }
+        }
+    }
+
+    override fun dismiss() {
+        if (isShowing) {
+            super.dismiss()
         }
     }
 

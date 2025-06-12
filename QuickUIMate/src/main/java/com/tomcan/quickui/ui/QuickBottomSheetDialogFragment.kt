@@ -15,8 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tomcan.frame.obs.IBaseLifecycle
 import com.tomcan.frame.vm.QuickViewModel
-import com.tomcan.quickui.utils.ActivityUtils
-import com.tomcan.quickui.utils.ActivityUtils.Companion
+import com.tomcan.quickui.utils.ActivityUtils.Companion.getActivity
 import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -76,7 +75,7 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
     override fun onStart() {
         super.onStart()
         if (mIsFirstVisit) {
-            ActivityUtils.getActivity(context)?.let {
+            getActivity(context)?.let {
                 (it as AppCompatActivity).let { activity ->
                     activity.lifecycle.addObserver(mIBaseLifecycle)
                 }
@@ -145,23 +144,20 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
         return t
     }
 
-    override fun dismiss() {
-        requireActivity()?.takeIf { !it.isFinishing && !it.isDestroyed }?.let {
-            takeIf { isAdded }?.let {
-                dialog?.takeIf {
-                    it.isShowing
-                }?.let {
-                    super.dismiss()
-                }
-            }
-        }
-    }
-
-    override fun show(manager: FragmentManager, tag: String?) {
-//        requireActivity()?.takeIf { !it.isFinishing && !it.isDestroyed }?.let {
-//            takeIf { !isAdded }?.let { super.show(manager, tag) }
+//    override fun dismiss() {
+//        requireActivity()?.takeIf { !it.isDestroyed && !it.isFinishing }?.let {
+//            takeIf { isAdded }?.let {
+//                dialog?.takeIf {
+//                    it.isShowing
+//                }?.let {
+//                    super.dismiss()
+//                }
+//            }
 //        }
-        super.show(manager, tag)
+//    }
+
+    fun show(manager: FragmentManager) {
+        super.show(manager, javaClass.simpleName)
     }
 
     override fun onDestroy() {
@@ -171,7 +167,7 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
             lifecycle.removeObserver(it)
         }
         mViewModelProvider = null
-        ActivityUtils.getActivity(context)?.let {
+        getActivity(context)?.let {
             (it as AppCompatActivity).let { activity ->
                 activity.lifecycle.removeObserver(mIBaseLifecycle)
             }
