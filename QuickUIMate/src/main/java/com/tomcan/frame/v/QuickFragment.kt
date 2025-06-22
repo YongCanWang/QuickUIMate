@@ -1,33 +1,38 @@
 package com.tomcan.frame.v
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.tomcan.frame.vm.QuickViewModel
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 /**
- * @author Tom灿
+ * @author TomCan
  * @description:
- * @date: 2024/11/9 21:03
+ * @date :2019/3/20 9:17
  */
-abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
-    AppCompatActivity() {
+abstract class QuickFragment<V : ViewDataBinding, VM : QuickViewModel<*>> : Fragment() {
     val TAG: String = javaClass.simpleName
     private var mIsFirstVisit = true
     lateinit var binding: V
     private val mLazy = lazy { getLazyViewModel() }
     val viewModel: VM by mLazy
     private val mViewModelProvider: ViewModelProvider by lazy { ViewModelProvider(this) }
+    private var mIsResume = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addCallback()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = getLayout()
-        setContentView(binding.root)
+        return binding.root
     }
 
     override fun onStart() {
@@ -36,18 +41,19 @@ abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
             addCallback()
             onStarted()
         }
+        mIsFirstVisit = false
     }
 
     override fun onResume() {
         super.onResume()
-        if (!mIsFirstVisit) {
+        if (mIsResume) {
             onReStart()
         }
-        mIsFirstVisit = false
+        mIsResume = true
     }
 
     private fun addCallback() {
-        onBackPressedDispatcher.addCallback(
+        requireActivity().onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(backPressedEnabled()) {
                 override fun handleOnBackPressed() {
@@ -76,8 +82,7 @@ abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
         return false
     }
 
-    open fun backPressed() {
-
+    fun backPressed() {
     }
 
     private fun getLazyViewModel(): VM {
@@ -99,7 +104,7 @@ abstract class QuickActivity<V : ViewDataBinding, VM : QuickViewModel<*>> :
         super.onDestroy()
         mIsFirstVisit = true
         if (this::binding.isInitialized) {
-            binding.unbind()
+            binding.unbind()  // TODO 待优化 会自动释放，不需要手动释放
         }
         if (mLazy.isInitialized()) {
             lifecycle.removeObserver(viewModel)

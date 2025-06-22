@@ -24,40 +24,40 @@ public class HomeFragment extends QuickFragment<FragmentHomeBinding, HomeViewMod
     @Override
     public void onStarted() {
         binding.title.setOnClickListener(v -> {
-            viewModel.getName();
-            viewModel.getAge();
-            viewModel.getAddress();
-            viewModel.getUser();
+            getViewModel().getName();
+            getViewModel().getAge();
+            getViewModel().getAddress();
+            getViewModel().getUser();
         });
 
-        viewModel.getNameObs().addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        getViewModel().getNameObs().addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                binding.tvName.setText(viewModel.getNameObs().get());
+                binding.tvName.setText(getViewModel().getNameObs().get());
             }
         });
-        viewModel.getAgeLive().observeForever(integer -> {
+        getViewModel().getAgeLive().observeForever(integer -> {
             binding.tvAge.setText(integer + "岁");
         });
-        viewModel.getAddressLive().observeForever(new Observer<String>() {
+        getViewModel().getAddressLive().observeForever(new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 binding.tvAddress.setText(s);
             }
         });
-        viewModel.getUserBeanObs().addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        getViewModel().getUserBeanObs().addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
 //                binding.setUserBean(sender);
 //                binding.setUserBean((UserBean) sender);
-                binding.setUserBean(viewModel.getUserBeanObs().get());
+                binding.setUserBean(getViewModel().getUserBeanObs().get());
             }
         });
 
-        viewModel.getName();
-        viewModel.getAge();
-        viewModel.getAddress();
-        viewModel.getUser();
+        getViewModel().getName();
+        getViewModel().getAge();
+        getViewModel().getAddress();
+        getViewModel().getUser();
         binding.butWaterfall.setOnClickListener(view -> startActivity(new Intent(requireContext(), WaterfallActivity.class)));
         binding.butSkin.setOnClickListener(view -> startActivity(new Intent(requireContext(), SkinActivity.class)));
         binding.butGridList.setOnClickListener(view -> startActivity(new Intent(requireContext(), GridListActivity.class)));

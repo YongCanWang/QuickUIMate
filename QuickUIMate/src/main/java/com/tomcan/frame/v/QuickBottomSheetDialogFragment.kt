@@ -11,12 +11,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tomcan.frame.obs.IBaseLifecycle
 import com.tomcan.frame.vm.QuickViewModel
 import com.tomcan.quickui.utils.ActivityUtils.Companion.getActivity
-import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
@@ -27,11 +25,12 @@ import java.lang.reflect.Type
  */
 abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickViewModel<*>> :
     BottomSheetDialogFragment() {
-    open val TAG: String = javaClass.simpleName
+    val TAG: String = javaClass.simpleName
     private var mIsFirstVisit = true
     lateinit var binding: V
-    open val viewModel: VM? by lazy { getLazyViewModel() } // TODO 可为null 待优化
-    private var mViewModelProvider: ViewModelProvider? = null
+    private val mLazy = lazy { getLazyViewModel() }
+    val viewModel: VM by mLazy
+    private val mViewModelProvider: ViewModelProvider by lazy { ViewModelProvider(this) }
     private val mIBaseLifecycle = object : IBaseLifecycle {
         override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
         }
@@ -54,11 +53,6 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
 
         override fun onPause() {
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mViewModelProvider = ViewModelProvider(this)
     }
 
     override fun onCreateView(
@@ -93,21 +87,6 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
         mIsFirstVisit = false
     }
 
-    private fun getLazyViewModel(): VM? {
-        val mGenericSuperclass = javaClass.genericSuperclass as ParameterizedType
-        val actualTypeArguments: Array<out Type>? = mGenericSuperclass?.actualTypeArguments
-        actualTypeArguments?.takeIf { it.size > 1 }?.let {
-            val vmClass = actualTypeArguments[1] as Class<VM>
-            mViewModelProvider?.get(vmClass)?.let {
-                lifecycleScope.launch {
-                    lifecycle.addObserver(it)
-                }
-                return it
-            }
-        }
-        return null
-    }
-
     private fun addCallback() {
         requireActivity().onBackPressedDispatcher.addCallback(
             this,
@@ -123,12 +102,16 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
     /**
      * 在整个Activity生命周期中只调用一次
      */
-    abstract fun onStarted()
+    open fun onStarted() {
+
+    }
 
     /**
      * 在整个Activity生命周期中可能会被调用多次，注意Activity首次被创建时不会被调用
      */
-    abstract fun onReStart()
+    open fun onReStart() {
+
+    }
 
     open fun backPressedEnabled(): Boolean {
         return false
@@ -138,9 +121,18 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
 
     }
 
+    private fun getLazyViewModel(): VM {
+        val mGenericSuperclass = javaClass.genericSuperclass as ParameterizedType
+        val actualTypeArguments: Array<out Type>? = mGenericSuperclass.actualTypeArguments
+        val vmClass = actualTypeArguments?.get(1) as Class<VM>
+        val v = mViewModelProvider[vmClass]
+        lifecycle.addObserver(v)
+        return v
+    }
+
     fun <T : QuickViewModel<*>> getQuickViewModel(quickViewModel: Class<T>): T {
-        val t: T? = mViewModelProvider?.get(quickViewModel)
-        lifecycle.addObserver(t!!)
+        val t: T = mViewModelProvider[quickViewModel]
+        lifecycle.addObserver(t)
         return t
     }
 
@@ -161,17 +153,18 @@ abstract class QuickBottomSheetDialogFragment<V : ViewDataBinding, VM : QuickVie
     }
 
     override fun onDestroy() {
+        super.onDestroy()
         mIsFirstVisit = true
-        binding.unbind()
-        viewModel?.let {
-            lifecycle.removeObserver(it)
+        if (this::binding.isInitialized) {
+            binding.unbind()
         }
-        mViewModelProvider = null
+        if (mLazy.isInitialized()) {
+            lifecycle.removeObserver(viewModel)
+        }
         getActivity(context)?.let {
             (it as AppCompatActivity).let { activity ->
                 activity.lifecycle.removeObserver(mIBaseLifecycle)
             }
         }
-        super.onDestroy()
     }
 }

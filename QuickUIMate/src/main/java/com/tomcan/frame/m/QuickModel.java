@@ -20,36 +20,37 @@ public abstract class QuickModel implements IBaseLifecycle {
 
     @Override
     public void onAny(LifecycleOwner owner, Lifecycle.Event event) {
-        Log.i(TAG, "onAny");
+        Log.d(TAG, "onAny");
     }
 
     @Override
     public void onCreate() {
-        Log.i(TAG, "onCreate");
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i(TAG, "onDestroy");
+        Log.d(TAG, "onCreate");
     }
 
     @Override
     public void onStart() {
-        Log.i(TAG, "onStart");
-    }
-
-    @Override
-    public void onStop() {
-        Log.i(TAG, "onStop");
+        Log.d(TAG, "onStart");
     }
 
     @Override
     public void onResume() {
-        Log.i(TAG, "onResume");
+        Log.d(TAG, "onResume");
     }
 
     @Override
     public void onPause() {
-        Log.i(TAG, "onPause");
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        Log.d(TAG, "onStop");
+    }
+
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy");
     }
 }

@@ -34,7 +34,7 @@ class WaterfallViewModel(application: Application) : BaseViewModel<BaseModel>(ap
 
     }
 
-    fun getSkinData() = readSkinDataForAssets(application).skin
+    fun getSkinData() = readSkinDataForAssets(context).skin
 
     private fun readSkinDataForAssets(application: Application): Skin {
         val stringBuilder = StringBuilder()
