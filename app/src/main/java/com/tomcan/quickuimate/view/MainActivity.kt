@@ -17,6 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
     override fun getLayout() = ActivityMainBinding.inflate(layoutInflater)
 
     override fun onStarted() {
+        viewModel.model
         binding.searchEdit.apply {
             setDrawablesLeft(com.google.android.material.R.drawable.ic_clock_black_24dp)
             setDrawablesRight(com.google.android.material.R.drawable.ic_clock_black_24dp)

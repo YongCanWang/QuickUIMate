@@ -1,6 +1,7 @@
 package com.tomcan.quickuimate.view;
 
 import android.content.Intent;
+import android.view.View;
 
 import androidx.databinding.Observable;
 import androidx.lifecycle.Observer;
@@ -23,6 +24,9 @@ public class HomeFragment extends QuickFragment<FragmentHomeBinding, HomeViewMod
 
     @Override
     public void onStarted() {
+
+        binding.butViewPager.setOnClickListener(view -> ViewPagerActivity.Companion.start(requireActivity()));
+
         binding.title.setOnClickListener(v -> {
             getViewModel().getName();
             getViewModel().getAge();
